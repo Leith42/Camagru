@@ -58,3 +58,4 @@ freeline/
 freeline_project_description.json
 /phpMyAdmin/
 /vendor/
+/composer.phar

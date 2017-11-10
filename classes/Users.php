@@ -28,8 +28,6 @@ class Users
 	{
 		$this->_email = $email;
 	}
-	private $_rights;
-
 
 	public function getId()
 	{
@@ -60,17 +58,7 @@ class Users
 	{
 		return $this->_password;
 	}
-
-	public function getRights()
-	{
-		return $this->_rights;
-	}
-
-	public function setRights($rights)
-	{
-		$this->_rights = $rights;
-	}
-
+	
 	public function isNew()
 	{
 		return empty($this->_id);

@@ -3,10 +3,9 @@
 namespace classes;
 
 use PHPUnit\Framework\TestCase;
-
-require_once('Database.php');
-require_once('UserManager.php');
-require_once('Users.php');
+require_once('../classes/Database.php');
+require_once('../classes/UserManager.php');
+require_once('../classes/Users.php');
 
 class UserManagerTest extends TestCase
 {

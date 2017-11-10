@@ -28,12 +28,10 @@ if (isset($_POST['username']) && isset($_POST['email']) &&
 	]);
 
 	if ($userManager->addUser($user) === true) {
-		echo 'success';
-		//redirect success
+		header('Location: ' . '/signup-success.php');
 	}
 	else {
-		echo 'failed';
-		//redirect failed
+		header('Location: ' . '/error.php');
 	}
 }
 
@@ -43,7 +41,7 @@ if (isset($_POST['username']) && isset($_POST['email']) &&
 <?php include "../partials/head.html"; ?>
 <body>
 <?php include "../partials/header.php"; ?>
-<script src="signup-form.js" type="text/javascript"></script>
+<script src="signup.js" type="text/javascript"></script>
 <main>
 	<div class="signup">
 		<h3>Sign up</h3>
@@ -52,7 +50,7 @@ if (isset($_POST['username']) && isset($_POST['email']) &&
 			We just need a couple of information about you before delivering the full experience.
 		</p>
 
-		<form name="signup-form" method="post" action="signup-form.php" onsubmit="return validate();">
+		<form name="signup-form" method="post" action="signup.php" onsubmit="return validate();">
 			<label>Username</label>
 			<input type="text" placeholder="Enter Username" name="username" required>
 

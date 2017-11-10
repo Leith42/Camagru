@@ -5,6 +5,8 @@ session_start();
 use classes\Database;
 use classes\UserManager;
 use classes\Users;
+use classes\EmailManager;
+use classes\TokenManager;
 
 if (isset($_SESSION['user'])) {
 	header('Location: ' . '/');
@@ -28,6 +30,12 @@ if (isset($_POST['username']) && isset($_POST['email']) &&
 	]);
 
 	if ($userManager->addUser($user) === true) {
+		$emailManager = new EmailManager($db);
+		$tokenManager = new TokenManager($db);
+
+		$token = $tokenManager->createVerificationToken($user);
+		$emailManager->sendVerificationEmail($user, $token);
+
 		header('Location: ' . '/signup-success.php');
 	}
 	else {

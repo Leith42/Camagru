@@ -58,7 +58,7 @@ class Users
 	{
 		return $this->_password;
 	}
-	
+
 	public function isNew()
 	{
 		return empty($this->_id);

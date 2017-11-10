@@ -1,15 +1,12 @@
 <?php
 
-namespace test;
-
-require('../classes/Database.php');
-require('../classes/Users.php');
-require('../classes/UserManager.php');
+namespace classes;
 
 use PHPUnit\Framework\TestCase;
-use classes\Database;
-use classes\UserManager;
-use classes\Users;
+
+require_once('Database.php');
+require_once('UserManager.php');
+require_once('Users.php');
 
 class UserManagerTest extends TestCase
 {
@@ -23,11 +20,24 @@ class UserManagerTest extends TestCase
 		$this->_userManager = new UserManager($this->_db);
 	}
 
-	public function testAddUserDuplicate()
+	public function testAddUserNameDuplicate()
 	{
 		$user = new Users([
 			'username' => 'Admin',
-			'password' => 'Password1!'
+			'password' => 'Password1!',
+			'email' => 'test@test.fr'
+		]);
+
+		$result = $this->_userManager->addUser($user);
+		$this->assertEquals(false, $result);
+	}
+
+	public function testAddUserEmailDuplicate()
+	{
+		$user = new Users([
+			'username' => 'Username',
+			'password' => 'Password1!',
+			'email' => 'aazri@student.42.fr'
 		]);
 
 		$result = $this->_userManager->addUser($user);
@@ -38,7 +48,8 @@ class UserManagerTest extends TestCase
 	{
 		$user = new Users([
 			'username' => '',
-			'password' => 'Password1!'
+			'password' => 'Password1!',
+			'email' => 'test@test.fr'
 		]);
 
 		$invalidUserName[] = '';
@@ -58,7 +69,8 @@ class UserManagerTest extends TestCase
 	{
 		$user = new Users([
 			'username' => 'pseudololz',
-			'password' => ''
+			'password' => '',
+			'email' => 'test@test.fr'
 		]);
 
 		$invalidPasswords[] = '';
@@ -81,7 +93,8 @@ class UserManagerTest extends TestCase
 	{
 		$user = new Users([
 			'username' => 'pseudololz',
-			'password' => ''
+			'password' => '',
+			'email' => 'test@test.fr'
 		]);
 
 		$invalidPasswords[] = 'Password!4';
@@ -101,7 +114,8 @@ class UserManagerTest extends TestCase
 	{
 		$user = new Users([
 			'username' => '',
-			'password' => 'Password!2'
+			'password' => 'Password!2',
+			'email' => 'test@test.fr',
 		]);
 
 		$validUserName[] = 'BernardTapis';

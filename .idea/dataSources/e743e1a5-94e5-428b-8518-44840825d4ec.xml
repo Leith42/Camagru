@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="camagru@localhost">
+  <database-model serializer="dbm" rdbms="MYSQL" format-version="4.4">
+    <root id="1"/>
+    <schema id="2" parent="1" name="camagru">
+      <Current>1</Current>
+      <Visible>1</Visible>
+    </schema>
+    <schema id="3" parent="1" name="information_schema"/>
+    <schema id="4" parent="1" name="mysql"/>
+    <schema id="5" parent="1" name="performance_schema"/>
+    <schema id="6" parent="1" name="sys"/>
+    <table id="7" parent="2" name="users"/>
+    <column id="8" parent="7" name="id">
+      <Position>1</Position>
+      <DataType>int(11) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="9" parent="7" name="username">
+      <Position>2</Position>
+      <DataType>char(10)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="10" parent="7" name="password">
+      <Position>3</Position>
+      <Comment>Blowfish</Comment>
+      <DataType>char(72)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="11" parent="7" name="email">
+      <Position>4</Position>
+      <DataType>char(50)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="12" parent="7" name="avatar">
+      <Position>5</Position>
+      <DataType>tinyint(3) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+      <DefaultExpression>&apos;0&apos;</DefaultExpression>
+    </column>
+    <column id="13" parent="7" name="rights">
+      <Position>6</Position>
+      <DataType>enum(&apos;admin&apos;, &apos;member&apos;)|0</DataType>
+      <NotNull>1</NotNull>
+      <DefaultExpression>&apos;member&apos;</DefaultExpression>
+    </column>
+    <column id="14" parent="7" name="verified">
+      <Position>7</Position>
+      <Comment>1 = Verified email</Comment>
+      <DataType>tinyint(1)|0</DataType>
+      <NotNull>1</NotNull>
+      <DefaultExpression>&apos;0&apos;</DefaultExpression>
+    </column>
+    <key id="15" parent="7" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+  </database-model>
+</dataSource>

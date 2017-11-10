@@ -1,0 +1,105 @@
+html {
+	height: 100%;
+	box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+body {
+	position: relative;
+	width: auto;
+	min-height: 100%;
+	margin: 0;
+	padding-bottom: 50px;
+	border: 0;
+	background-image: url('../img/wallpaper.jpg');
+	background-size:cover;
+	font-family: 'Roboto', 'Arial', sans-serif;
+	color: #13140F;
+}
+
+header{
+	width: auto;
+	height: 75px;
+	background-color: #13140F;
+}
+
+header h1 {
+	position: absolute;
+	margin: 0;
+	padding: 0;
+	top: 0;
+	left: 10px;
+	font-family: 'Pacifico', cursive;
+	font-size: 220%;
+	color: #fff;
+}
+
+footer {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	height: 50px;
+	background-color: #13140F;
+	text-align: right;
+	color: #fff;
+	font-size: 85%;
+	padding: 19px 10px;
+}
+
+.signup {
+	width: 40%;
+	margin: 30px auto;
+	padding: 10px;
+	border: 1px solid #B7BFBF;
+	background: #E7E7E7;
+}
+
+label, input, button {
+	display: block;
+	width: 100%;
+}
+
+label {
+	font-size: 80%;
+	margin-left: 5px;
+}
+
+input, button {
+	height: 35px;
+	margin: 2px 0 10px 0;
+	padding: 0 5px;
+}
+
+input {
+	border: 1px solid #B7BFBF;
+}
+
+.button {
+	background-color: #4CAF50;
+	color: #fff;
+	border: 0;
+}
+
+.signup h3 {
+	margin: 0;
+	font-size: 200%;
+	padding-bottom: 5px;
+	border-bottom: 1px solid #B7BFBF;
+}
+
+.splash {
+	margin: 10px 0;
+	padding: 2px;
+	font-size: 95%;
+}
+
+.connection-block {
+	text-align: right;
+	margin: auto;
+}

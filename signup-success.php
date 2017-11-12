@@ -4,7 +4,7 @@
 <body>
 <?php include "partials/header.php"; ?>
 <main>
-	<div class="signup">
+	<div class="form">
 		<h3>Check your mailbox!</h3>
 		<p class="splash">
 			One last step before you can use your Camagru account.<br/>

@@ -51,7 +51,7 @@ if (isset($_POST['username']) && isset($_POST['email']) &&
 <?php include "../partials/header.php"; ?>
 <script src="signup.js" type="text/javascript"></script>
 <main>
-	<div class="signup">
+	<div class="form">
 		<h3>Sign up</h3>
 		<p class="splash">
 			We're glad to have you join us!<br/>

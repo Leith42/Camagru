@@ -4,7 +4,7 @@
 <body>
 <?php include "partials/header.php"; ?>
 <main>
-	<div class="signup">
+	<div class="form">
 		<h3>Ready for selfies!</h3>
 		<p class="splash">
 			Your account is activated! You can now log-in to Camagru.

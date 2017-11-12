@@ -121,6 +121,20 @@ class UserManager
 		return $result[0];
 	}
 
+	public function getUserByUserName(string $username)
+	{
+		$q = $this->db->prepare('
+		SELECT *
+		FROM users
+		WHERE username = :username
+		');
+
+		$q->bindValue('username', $username);
+		$q->execute();
+
+		return ($q->fetch());
+	}
+
 	private function getIdFromToken(string $token)
 	{
 		if (isset($token)) {

@@ -4,7 +4,7 @@
 <body>
 <?php include "partials/header.php"; ?>
 <main>
-	<div class="signup">
+	<div class="form">
 		<h3>An error occured!</h3>
 		<p class="splash">
 			Please contact the support.<br/>

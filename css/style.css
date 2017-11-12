@@ -52,7 +52,7 @@ footer {
 	padding: 19px 10px;
 }
 
-.signup {
+.form {
 	width: 40%;
 	margin: 30px auto;
 	padding: 10px;
@@ -86,7 +86,7 @@ input {
 	border: 0;
 }
 
-.signup h3 {
+.form h3 {
 	margin: 0;
 	font-size: 200%;
 	padding-bottom: 5px;

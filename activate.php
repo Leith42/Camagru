@@ -12,7 +12,7 @@ if (isset($_GET['id'])) {
 	try {
 		$db = Database::getMysqlConnection();
 	} catch (PDOException $e) {
-		exit('Failed to connect to the database.');
+		exit($e->getMessage());
 	}
 
 	$userManager = new UserManager($db);
@@ -21,6 +21,9 @@ if (isset($_GET['id'])) {
 		$tokenManager = new TokenManager($db);
 		$tokenManager->deleteToken($token);
 		header('Location: ' . '/verified-success.php');
+	} else {
+		header('Location: ' . '/error.php');
 	}
+} else {
+	header('Location: ' . '/error.php');
 }
-header('Location: ' . '/error.php');

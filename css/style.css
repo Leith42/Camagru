@@ -101,7 +101,17 @@ input {
 
 .connection-block {
 	text-align: right;
-	margin: auto;
+}
+
+.connection-block a:link, a:visited {
+    color: white;
+	padding: 28px 20px;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.connection-block a:hover, a:active {
+    background-color: grey;
 }
 
 .center {

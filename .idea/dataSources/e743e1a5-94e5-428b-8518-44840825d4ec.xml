@@ -67,5 +67,13 @@
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
     </column>
+    <index id="19" parent="8" name="id">
+      <ColNames>id</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="20" parent="8" name="id">
+      <ColNames>id</ColNames>
+      <UnderlyingIndexName>id</UnderlyingIndexName>
+    </key>
   </database-model>
 </dataSource>

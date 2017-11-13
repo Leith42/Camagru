@@ -34,9 +34,12 @@ if (isset($_POST['username']) && isset($_POST['email']) &&
 		$tokenManager = new TokenManager($db);
 
 		$token = $tokenManager->createVerificationToken($user);
-		$emailManager->sendVerificationEmail($user, $token);
-
-		header('Location: ' . '/signup-success.php');
+		if (!($emailManager->sendVerificationEmail($user, $token))) {
+			header('Location: ' . '/error.php');
+		}
+		else {
+			header('Location: ' . '/signup-success.php');
+		}
 	}
 	else {
 		header('Location: ' . '/error.php');

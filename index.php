@@ -1,7 +1,6 @@
 <?php
 session_start();
 require_once('autoload.php');
-
 use classes\Users;
 use classes\UserManager;
 use classes\Database;
@@ -20,7 +19,6 @@ use classes\Database;
 //
 //$userManager = new UserManager($db);
 //$userManager->addUser($user);
-
 
 ?>
 <!DOCTYPE html>

@@ -5,21 +5,6 @@ use classes\Users;
 use classes\UserManager;
 use classes\Database;
 
-//$user = new Users([
-//	'username' => 'Admin',
-//	'password' => 'Admin94!',
-//	'email' => 'aazri@student.42.fr'
-//]);
-//
-//try {
-//	$db = Database::getMysqlConnection();
-//} catch (PDOException $e) {
-//	exit('Failed to connect to the database.');
-//}
-//
-//$userManager = new UserManager($db);
-//$userManager->addUser($user);
-
 ?>
 <!DOCTYPE html>
 <html lang="en">

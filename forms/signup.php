@@ -34,7 +34,7 @@ if (isset($_POST['username']) && isset($_POST['email']) &&
 		$tokenManager = new TokenManager($db);
 
 		$token = $tokenManager->createVerificationToken($user);
-		if (!($emailManager->sendVerificationEmail($user, $token))) {
+		if ($emailManager->sendVerificationEmail($user, $token) === false) {
 			header('Location: ' . '/error.php');
 		}
 		else {
@@ -52,7 +52,7 @@ if (isset($_POST['username']) && isset($_POST['email']) &&
 <?php include "../partials/head.html"; ?>
 <body>
 <?php include "../partials/header.php"; ?>
-<script src="signup.js" type="text/javascript"></script>
+<script src="../scripts/signup.js" type="text/javascript"></script>
 <main>
 	<div class="form">
 		<h3>Sign up</h3>

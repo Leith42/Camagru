@@ -60,17 +60,17 @@ footer {
 	background: #E7E7E7;
 }
 
-label, input, button {
+form label, form input, form button {
 	display: block;
 	width: 100%;
 }
 
-label {
+form label {
 	font-size: 80%;
 	margin-left: 5px;
 }
 
-input, button {
+form input, button {
 	height: 35px;
 	margin: 2px 0 10px 0;
 	padding: 0 5px;
@@ -116,4 +116,28 @@ input {
 
 .center {
 	text-align: center;
+}
+
+.webcam {
+	display: inline-block;
+	margin: 1% auto;
+	padding: 0.5%;
+	border: 1px solid #B7BFBF;
+	background: #E7E7E7;
+}
+
+#shot {
+  display: block;
+  margin: auto;
+  background-color: rgba(0, 150, 0, 0.5);
+  font-size: 15px;
+  color: white;
+}
+
+#canvas {
+	display: none;
+}
+
+.output {
+	display: inline-block;
 }

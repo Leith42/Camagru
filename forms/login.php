@@ -35,7 +35,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
 <?php include "../partials/head.html"; ?>
 <body>
 <?php include "../partials/header.php"; ?>
-<!--<script src="signup.js" type="text/javascript"></script>-->
+<script src="../scripts/loginFailed.js" type="text/javascript"></script>
 <main>
 	<div class="form">
 		<h3>Sign in</h3>

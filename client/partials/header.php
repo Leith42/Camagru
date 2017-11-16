@@ -8,8 +8,8 @@
 				echo '<a href="/logout.php">Log out</a>';
 			}
 			else {
-				echo '<a href="/forms/signup.php">Sign up</a>';
-				echo '<a href="/forms/login.php">Log in</a>';
+				echo '<a href="/client/forms/signup-form.php">Sign up</a>';
+				echo '<a href="/client/forms/login-form.php">Log in</a>';
 			}
 		?>
 	</div>

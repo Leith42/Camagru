@@ -1,5 +1,4 @@
 <?php
-require_once('autoload.php');
 session_start();
 
 if (!isset($_SESSION['user'])) {
@@ -16,14 +15,14 @@ if (!isset($_SESSION['user'])) {
 <script src="scripts/webcam.js" type="text/javascript"></script>
 <main class="center">
 	<div class="webcam">
-		<video id="video"></video>
-		<button id="shot">Shot!</button>
+		<video id="video">Video stream not available.</video>
+		<button id="shot">Take photo</button>
 	</div>
-<!--	<canvas id="canvas"></canvas>-->
-<!--	<div class="webcam">-->
-<!--		<img id="photo" alt="The screen capture will appear in this box.">-->
-<!--	</div>-->
-
+	<canvas id="canvas">
+	</canvas>
+	<div class="webcam">
+		<img id="photo" alt="The screen capture will appear in this box.">
+	</div>
 </main>
 <?php include "partials/footer.html"; ?>
 </body>

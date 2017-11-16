@@ -7,6 +7,7 @@ class Users
 	private $_id;
 	private $_username;
 	private $_password;
+	private $_passwordRepeat;
 	private $_email;
 
 	public function __construct(array $userInfos)
@@ -17,6 +18,16 @@ class Users
 				$this->$method($value);
 			}
 		}
+	}
+
+	public function getPasswordRepeat()
+	{
+		return $this->_passwordRepeat;
+	}
+
+	public function setPasswordRepeat($passwordRepeat)
+	{
+		$this->_passwordRepeat = $passwordRepeat;
 	}
 
 	public function getEmail()
@@ -57,10 +68,5 @@ class Users
 	public function getPassword()
 	{
 		return $this->_password;
-	}
-
-	public function isNew()
-	{
-		return empty($this->_id);
 	}
 }

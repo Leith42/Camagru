@@ -4,8 +4,8 @@
 		<?php
 		echo '<a href="#">Gallery</a>';
 		if (isset($_SESSION['user'])) {
-				echo '<a href="/montage.php">Take a shot!</a>';
-				echo '<a href="/logout.php">Log out</a>';
+				echo '<a href="/client/montage.php">Take a shot!</a>';
+				echo '<a href="/server/logout.php">Log out</a>';
 			}
 			else {
 				echo '<a href="/client/forms/signup-form.php">Sign up</a>';

@@ -1,10 +1,10 @@
 <?php
-require_once('../autoload.php');
+require_once('../../autoload.php');
 session_start();
 
-use classes\UserManager;
-use classes\Users;
-use classes\Database;
+use server\classes\UserManager;
+use server\classes\Users;
+use server\classes\Database;
 
 if (isset($_SESSION['user'])) {
 	header('Location: ' . '/');
@@ -35,12 +35,12 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
 <?php include "../partials/head.html"; ?>
 <body>
 <?php include "../partials/header.php"; ?>
-<script src="../scripts/loginFailed.js" type="text/javascript"></script>
+<script src="../js/loginFailed.js" type="text/javascript"></script>
 <main>
 	<div class="form">
 		<h3>Sign in</h3>
 		<br/>
-		<form name="login-form" method="post" action="login.php">
+		<form name="login-form" method="post">
 			<label>Username</label>
 			<input type="text" placeholder="Enter Username" name="username" required>
 

@@ -1,10 +1,10 @@
 <?php
-require_once('autoload.php');
+require_once('../autoload.php');
 session_start();
 
-use classes\UserManager;
-use classes\Database;
-use classes\TokenManager;
+use server\classes\UserManager;
+use server\classes\Database;
+use server\classes\TokenManager;
 
 if (isset($_GET['id'])) {
 	$token = $_GET['id'];
@@ -20,10 +20,10 @@ if (isset($_GET['id'])) {
 	if (($userManager->activateAccount($token)) === true) {
 		$tokenManager = new TokenManager($db);
 		$tokenManager->deleteToken($token);
-		header('Location: ' . '/verified-success.php');
+		header('Location: ' . '/client/verified-success.php');
 	} else {
-		header('Location: ' . '/error.php');
+		header('Location: ' . '/client/error.php');
 	}
 } else {
-	header('Location: ' . '/error.php');
+	header('Location: ' . '/client/error.php');
 }

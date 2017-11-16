@@ -3,135 +3,120 @@ document.addEventListener("DOMContentLoaded", function () {
     var submitButton = document.getElementsByName("submit-button")[0];
 
     submitButton.addEventListener("click", function (event) {
-        // event.preventDefault();
-        var form = document.forms["signup-form"];
-        var username = form.elements.username;
-        var email = form.elements.email;
-        var password = form.elements.password;
-        var passwordRepeat = form.elements.passwordRepeat;
-
-        // AJAX
         var xmlhttp = new XMLHttpRequest();
+        var form = document.forms["signup-form"];
+        var toSend =
+            'username=' + encodeURIComponent(form.elements.username.value) +
+            '&email=' + encodeURIComponent(form.elements.email.value) +
+            '&password=' + encodeURIComponent(form.elements.password.value) +
+            '&passwordRepeat=' + encodeURIComponent(form.elements.passwordRepeat.value);
 
         xmlhttp.onreadystatechange = function () {
             if (this.readyState === 4 && this.status === 200) {
-                document.getElementById("button").innerHTML = xmlhttp.responseText;
+                var response = JSON.parse(xmlhttp.response);
+
+                if (response === 'FormIsValid') {
+                    window.location.replace('/client/signup-success.php');
+                }
+                else {
+                    printUsernameError(form, response);
+                    printPasswordError(form, response);
+                    printEmailError(form, response);
+                }
             }
         };
 
-        xmlhttp.open("GET", "/forms/api.php", true);
+        xmlhttp.open("POST", "/server/signup.php", true);
         xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xmlhttp.send();
-        console.log('sent');
+        xmlhttp.send(toSend);
         event.preventDefault();
     });
 });
 
-// function validate() {
-//     "use strict";
-//     var form = document.forms["signup-form"];
-//     var username = form.elements.username;
-//     var email = form.elements.email;
-//     var password = form.elements.password;
-//     var passwordRepeat = form.elements.passwordRepeat;
-//     var errorElem = document.createElement('P');
-//     var currentErrors = document.getElementById("error");
-//     var isValid = true;
-//
-//     errorElem.style.color = 'red';
-//     errorElem.id = 'error';
-//     if (currentErrors !== null) {
-//         currentErrors.remove();
-//     }
-//     if (usernameChecker(form, username, errorElem) === false) {
-//         isValid = false;
-//     }
-//     if (emailChecker(form, email, errorElem) === false) {
-//         isValid = false;
-//     }
-//     if (passwordChecker(form, password, passwordRepeat, errorElem) === false) {
-//         isValid = false;
-//     }
-//     return isValid;
-// }
-//
-// function usernameChecker(form, username, errorElem) {
-//     "use strict";
-//     var stringRangeRegEx = /^[a-zA-Z0-9_]{3,12}$/;
-//     var alphaNumericRegEx = /^[a-zA-Z0-9_]*$/;
-//     var isValid = true;
-//
-//     if (!username.value.match(stringRangeRegEx)) {
-//         addText(errorElem, "* The username must be between 3 and 12 characters long.<br />");
-//         form.appendChild(errorElem);
-//         username.style.borderColor = 'red';
-//         isValid = false;
-//     }
-//     if (!username.value.match(alphaNumericRegEx)) {
-//         addText(errorElem, "* The username should only contain alphanumeric characters.<br />");
-//         form.appendChild(errorElem);
-//         username.style.borderColor = 'red';
-//         isValid = false;
-//     }
-//     if (isValid === true) {
-//         username.style.borderColor = 'green';
-//     }
-//     return isValid;
-// }
-//
-// function emailChecker(form, email, errorElem) {
-//     "use strict";
-//     if ((email.value.match(/@/g) || []).length !== 1) {
-//         addText(errorElem, "* The email format is invalid.<br />");
-//         form.appendChild(errorElem);
-//         email.style.borderColor = 'red';
-//         return false;
-//     }
-//     email.style.borderColor = 'green';
-//     return true;
-// }
-//
-// function passwordChecker(form, password, passwordRepeat, errorElem) {
-//     "use strict";
-//     var passwordSecurityRegEx = /((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W]).{6,20})/;
-//     var isValid = true;
-//
-//     if ((password.value !== passwordRepeat.value)) {
-//         addText(errorElem, "* Password doesn't match.<br />");
-//         form.appendChild(errorElem);
-//         isValid = false;
-//     }
-//     if (!password.value.match(passwordSecurityRegEx)) {
-//         addText(errorElem,
-//             "* The password must be between 6 and 20 characters long and should contain at least: <br />" +
-//             "• 1 special character.<br />" +
-//             "• 1 digit.<br />" +
-//             "• both uppercase and lowercase characters.<br />");
-//         form.appendChild(errorElem);
-//         isValid = false;
-//     }
-//     if (isValid === false) {
-//         password.style.borderColor = 'red';
-//         passwordRepeat.style.borderColor = 'red';
-//     }
-//     else {
-//         password.style.borderColor = 'green';
-//         passwordRepeat.style.borderColor = 'green';
-//     }
-//     return isValid;
-// }
-//
-// function addText(node, text) {
-//     "use strict";
-//     var t = text.split(/\s*<br ?\/?>\s*/i), i;
-//
-//     if (t[0].length > 0) {
-//         node.appendChild(document.createTextNode(t[0]));
-//     }
-//     for (i = 1; i < t.length; i++) {
-//         node.appendChild(document.createElement('BR'));
-//         if (t[i].length > 0) {
-//             node.appendChild(document.createTextNode(t[i]));
-//         }
-//     }
-// }
+function printUsernameError(form, response) {
+    "use strict";
+    var prevError = document.getElementById("usernameError");
+    if (prevError) {
+        prevError.remove();
+    }
+
+    var usernameError = document.createElement('P');
+    usernameError.id = "usernameError";
+    if (response.usernameIsValid === false) {
+        addText(usernameError, "• The username must be between 3 and 12 characters long.<br />");
+        form.elements.username.style.borderColor = 'red';
+        form.appendChild(usernameError);
+    }
+    else if (response.usernameIsAvailable === false) {
+        addText(usernameError, "• This username is already taken.<br />");
+        form.elements.username.style.borderColor = 'red';
+        form.appendChild(usernameError);
+    }
+    else {
+        form.elements.username.style.borderColor = 'green';
+    }
+}
+
+function printPasswordError(form, response) {
+    "use strict";
+    var prevError = document.getElementById("passwordError");
+    if (prevError) {
+        prevError.remove();
+    }
+
+    var passwordError = document.createElement('P');
+    passwordError.id = "passwordError";
+    if (response.passwordIsValid === false) {
+        addText(passwordError, "• The password must be greater than 6 characters and must contains: <br />" +
+            "   * 1 or more special character.<br />" +
+            "   * 1 or more digit.<br />" +
+            "   * both uppercase and lowercase characters.<br />");
+        form.elements.password.style.borderColor = 'red';
+        form.appendChild(passwordError);
+    }
+    else if (response.passwordsAreMatching === false) {
+        addText(passwordError, "• Password doesn't match.<br />");
+        form.elements.password.style.borderColor = 'red';
+        form.elements.passwordRepeat.style.borderColor = 'red';
+        form.appendChild(passwordError);
+    }
+    else {
+        form.elements.password.style.borderColor = 'green';
+        form.elements.passwordRepeat.style.borderColor = 'green';
+    }
+}
+
+function printEmailError(form, response) {
+    "use strict";
+    var prevError = document.getElementById("emailError");
+    if (prevError) {
+        prevError.remove();
+    }
+
+    var emailError = document.createElement('P');
+    emailError.id = "emailError";
+    if (response.emailIsValid === false) {
+        addText(emailError, "• The email format is invalid.");
+        form.elements.email.style.borderColor = 'red';
+        form.appendChild(emailError);
+    }
+    else {
+        form.elements.email.style.borderColor = 'green';
+    }
+}
+
+function addText(node, text) {
+    "use strict";
+    var t = text.split(/\s*<br ?\/?>\s*/i), i;
+
+    node.style.color = 'red';
+    if (t[0].length > 0) {
+        node.appendChild(document.createTextNode(t[0]));
+    }
+    for (i = 1; i < t.length; i++) {
+        node.appendChild(document.createElement('BR'));
+        if (t[i].length > 0) {
+            node.appendChild(document.createTextNode(t[i]));
+        }
+    }
+}

@@ -2,9 +2,10 @@
 session_start();
 
 if (!isset($_SESSION['user'])) {
-	header('Location: ' . 'forms/login.php');
+	header('Location: /client/forms/login-form.php');
 	exit();
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -12,7 +13,7 @@ if (!isset($_SESSION['user'])) {
 <?php include "partials/head.html"; ?>
 <body>
 <?php include "partials/header.php"; ?>
-<script src="scripts/webcam.js" type="text/javascript"></script>
+<script src="js/webcam.js" type="text/javascript"></script>
 <main class="center">
 	<div class="webcam">
 		<video id="video">Video stream not available.</video>

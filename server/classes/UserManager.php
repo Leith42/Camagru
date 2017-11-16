@@ -18,92 +18,21 @@ class UserManager
 
 	public function addUser(Users $user)
 	{
-		if ($this->userIsValid($user) === true) {
-			$username = $user->getUsername();
-			$password = password_hash($user->getPassword(), PASSWORD_BCRYPT);
-			$email = $user->getEmail();
+		$username = $user->getUsername();
+		$password = password_hash($user->getPassword(), PASSWORD_BCRYPT);
+		$email = $user->getEmail();
 
-			$q = $this->db->prepare('
+		$q = $this->db->prepare('
 	 	 	INSERT INTO users(username, password, email)
 			VALUES(:username, :password, :email)
 			');
 
-			$q->bindValue(':username', $username);
-			$q->bindValue(':password', $password);
-			$q->bindValue(':email', $email);
-			$q->execute();
-
-			$user->setId($this->getUserId($user));
-			return true;
-		}
-		return false;
-	}
-
-	private function userIsValid(Users $user)
-	{
-		if ($this->userNameIsValid($user->getUsername()) === false ||
-			$this->userNameIsAvailable($user->getUsername()) === false ||
-			$this->passwordIsValid($user->getPassword()) === false ||
-			$this->emailIsAvailable($user->getEmail()) === false) {
-			return false;
-		}
-		return true;
-	}
-
-	private function userNameIsAvailable(string $username)
-	{
-		$q = $this->db->prepare('
-		SELECT username
-		FROM users
-		WHERE username = :username
-		');
-
-		$q->bindValue('username', $username);
+		$q->bindValue(':username', $username);
+		$q->bindValue(':password', $password);
+		$q->bindValue(':email', $email);
 		$q->execute();
 
-		$row = $q->fetch();
-		if ($row > 0) {
-			return false;
-		}
-		return true;
-	}
-
-	private function emailIsAvailable(string $email)
-	{
-		$q = $this->db->prepare('
-		SELECT email
-		FROM users
-		WHERE email = :email
-		');
-
-		$q->bindValue('email', $email);
-		$q->execute();
-
-		$row = $q->fetch();
-		if ($row > 0) {
-			return false;
-		}
-		return true;
-	}
-
-	private function userNameIsValid(string $username)
-	{
-		$userNamePattern = '/^[a-zA-Z0-9]{3,12}$/';
-
-		if (preg_match($userNamePattern, $username)) {
-			return true;
-		}
-		return false;
-	}
-
-	private function passwordIsValid(string $password)
-	{
-		$passwordPattern = '/((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W]).{6,20})/';
-
-		if (preg_match($passwordPattern, $password)) {
-			return true;
-		}
-		return false;
+		$user->setId($this->getUserId($user));
 	}
 
 	public function getUserId(Users $user)

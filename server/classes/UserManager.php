@@ -46,8 +46,8 @@ class UserManager
 		$q->bindValue('username', $user->getUsername());
 		$q->execute();
 
-		$result = $q->fetch();
-		return $result[0];
+		$result = $q->fetch(PDO::FETCH_ASSOC);
+		return $result['id'];
 	}
 
 	public function getUserByUserName(string $username)
@@ -60,8 +60,30 @@ class UserManager
 
 		$q->bindValue('username', $username);
 		$q->execute();
+		$result = $q->fetch(PDO::FETCH_ASSOC);
 
-		return ($q->fetch());
+		if ($result) {
+			return new Users($result);
+		}
+		return false;
+	}
+
+	public function getUserByEmail(string $email)
+	{
+		$q = $this->db->prepare('
+		SELECT *
+		FROM users
+		WHERE email = :email
+		');
+
+		$q->bindValue('email', $email);
+		$q->execute();
+		$result = $q->fetch(PDO::FETCH_ASSOC);
+
+		if ($result) {
+			return new Users($result);
+		}
+		return null;
 	}
 
 	private function getIdFromToken(string $token)
@@ -76,9 +98,9 @@ class UserManager
 			$q->bindValue('token', $token);
 			$q->execute();
 
-			$row = $q->fetch();
-			if ($row > 0) {
-				return $row[0];
+			$result = $q->fetch(PDO::FETCH_ASSOC);
+			if ($result) {
+				return $result['id'];
 			}
 		}
 		return null;

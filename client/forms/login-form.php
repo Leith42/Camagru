@@ -1,32 +1,9 @@
 <?php
-require_once('../../autoload.php');
 session_start();
-
-use server\classes\UserManager;
-use server\classes\Users;
-use server\classes\Database;
 
 if (isset($_SESSION['user'])) {
 	header('Location: ' . '/');
 	exit();
-}
-if (isset($_POST['username']) && isset($_POST['password'])) {
-
-	$username = $_POST['username'];
-	$password = $_POST['password'];
-
-	try {
-		$db = Database::getMysqlConnection();
-	} catch (PDOException $e) {
-		exit($e->getMessage());
-	}
-
-	$userManager = new UserManager($db);
-	$user = $userManager->getUserByUserName($username);
-	if (password_verify($password, $user['password']) === true) {
-		$_SESSION['user'] = $username;
-		header('Location: ' . '/');
-	}
 }
 
 ?>
@@ -35,7 +12,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
 <?php include "../partials/head.html"; ?>
 <body>
 <?php include "../partials/header.php"; ?>
-<script src="../js/loginFailed.js" type="text/javascript"></script>
+<script src="../js/login.js" type="text/javascript"></script>
 <main>
 	<div class="form">
 		<h3>Sign in</h3>
@@ -47,7 +24,10 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
 			<label>Password</label>
 			<input type="password" placeholder="Enter Password" name="password" required>
 
-			<button type="submit" class="button">Let's go!</button>
+			<button name="submit-button" type="submit" class="button">Let's go!</button>
+			<div style="text-align: right">
+				<a id="forgot-password" href="reset-request-form.php">forgot password?</a>
+			</div>
 		</form>
 	</div>
 </main>

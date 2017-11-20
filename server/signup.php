@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 
 if (isset($_SESSION['user'])) {
@@ -41,15 +40,12 @@ if (isset($_POST['username']) && isset($_POST['email']) &&
 	}
 
 	$userManager = new UserManager($db);
-	$tokenManager = new TokenManager($db);
 	$emailManager = new EmailManager($db);
 
 	$userManager->addUser($user);
-	$token = $tokenManager->createVerificationToken($user);
-	$emailManager->sendVerificationEmail($user, $token);
+	$emailManager->sendVerificationEmail($user);
 
 	die (json_encode('FormIsValid'));
-
 } else {
 	header('Location: ' . '../client/error.php');
 	exit();

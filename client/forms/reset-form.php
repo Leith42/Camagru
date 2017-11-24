@@ -1,8 +1,8 @@
 <?php
-
 session_start();
+require_once('../../autoload.php');
 
-if (isset($_SESSION['user'])) {
+if (isset($_SESSION['user']) || !isset($_GET['id'])) {
 	header('Location: ' . '/');
 	exit();
 }
@@ -13,23 +13,13 @@ if (isset($_SESSION['user'])) {
 <?php include "../partials/head.html"; ?>
 <body>
 <?php include "../partials/header.php"; ?>
-<script src="/client/js/signup.js" type="text/javascript"></script>
+<script src="/client/js/reset.js" type="text/javascript"></script>
 <main>
 	<div class="form">
-		<h3>Sign up</h3>
-		<p class="splash">
-			We're glad to have you join us!<br/>
-			We just need a couple of information about you before delivering the full experience.
-		</p>
-
-		<form name="signup-form" method="post">
-			<label>Username</label>
-			<input type="text" placeholder="Enter Username" name="username" required>
-
-			<label>E-mail</label>
-			<input type="text" placeholder="Enter Email" name="email" required>
-
-			<label>Password</label>
+		<h3>Reset Password</h3>
+		<p class="splash"></p>
+		<form name="reset-form" method="post" action="/server/reset-password.php">
+			<label>New Password</label>
 			<input type="password" placeholder="Enter Password" name="password" required>
 
 			<label>Repeat Password</label>

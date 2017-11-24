@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 var response = JSON.parse(xmlhttp.response);
 
                 if (response === 'FormIsValid') {
-                    window.location.replace('/client/signup-success.php');
+                    window.location.replace('/client/reset-request-success.php');
                 }
                 else {
                     printEmailError(form);
@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         };
 
-        xmlhttp.open("POST", "/server/reset-password.php", true);
+        xmlhttp.open("POST", "/server/reset-request-password.php", true);
         xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xmlhttp.send(toSend);
         event.preventDefault();

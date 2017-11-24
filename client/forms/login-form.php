@@ -12,7 +12,7 @@ if (isset($_SESSION['user'])) {
 <?php include "../partials/head.html"; ?>
 <body>
 <?php include "../partials/header.php"; ?>
-<script src="../js/login.js" type="text/javascript"></script>
+<script src="/client/js/login.js" type="text/javascript"></script>
 <main>
 	<div class="form">
 		<h3>Sign in</h3>

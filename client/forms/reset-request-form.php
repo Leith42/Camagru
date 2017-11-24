@@ -13,7 +13,7 @@ if (isset($_SESSION['user'])) {
 <?php include "../partials/head.html"; ?>
 <body>
 <?php include "../partials/header.php"; ?>
-<script src="../js/resetRequest.js" type="text/javascript"></script>
+<script src="/client/js/resetRequest.js" type="text/javascript"></script>
 <main>
 	<div class="form">
 		<h3>Password Reset</h3>

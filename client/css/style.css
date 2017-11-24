@@ -119,6 +119,7 @@ input {
 }
 
 .webcam {
+	position: relative;
 	display: inline-block;
 	margin: 1% auto;
 	padding: 0.5%;
@@ -145,6 +146,30 @@ input {
 	margin-right: 5px;
 }
 
-.output {
+.image-box {
 	display: inline-block;
+	position: relative;
+	margin: 1% 0.5%;
+	padding: 0.5%;
+	border: 1px solid #B7BFBF;
+	background: #E7E7E7;
+}
+
+.image-box .image img {
+	margin: 0.5%;
+	padding: 5%;
+	width: 150px;
+}
+
+.image-box .image img:hover, .image-box .image img:active {
+	background-color: lightgrey;
+}
+
+.overlay {
+  width: 480px;
+  position:absolute;
+  z-index:9999;
+  bottom:15px;
+	left:10px;
+	text-align:center;
 }

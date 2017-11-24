@@ -17,7 +17,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     window.location.replace('/');
                 }
                 else {
-                    console.log(response);
                     printLoginError(form);
                 }
             }

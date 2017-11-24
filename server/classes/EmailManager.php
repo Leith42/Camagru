@@ -18,7 +18,7 @@ class EmailManager
 		$token = $this->tokenManager->createVerificationToken($user);
 		$to = $user->getEmail();
 		$subject = "Camagru - Account validation!";
-		$link = "http://localhost:8080/activate.php?id=" . $token;
+		$link = "http://localhost:8080/server/activate.php?id=" . $token;
 		$body = "Hi,\n\nPlease confirm your email address by clicking on this link:\n" . $link;
 		return mail($to, $subject, $body);
 	}
@@ -28,7 +28,7 @@ class EmailManager
 		$token = $this->tokenManager->createResetPasswordToken($user);
 		$to = $user->getEmail();
 		$subject = "Camagru - Reset password.";
-		$link = "http://localhost:8080/forgot-pass.php?id=" . $token;
+		$link = "http://localhost:8080/client/forms/reset-form.php?id=" . $token;
 		$body = "Hi,\n\nPlease reset your password by clicking on this link:\n" . $link;
 		return mail($to, $subject, $body);
 	}

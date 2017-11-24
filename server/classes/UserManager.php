@@ -35,7 +35,7 @@ class UserManager
 		$user->setId($this->getUserId($user));
 	}
 
-	public function getUserId(Users $user)
+	private function getUserId(Users $user)
 	{
 		$q = $this->db->prepare('
 		SELECT id
@@ -68,6 +68,24 @@ class UserManager
 		return false;
 	}
 
+	public function getUserById(int $id)
+	{
+		$q = $this->db->prepare('
+		SELECT *
+		FROM users
+		WHERE id = :id
+		');
+
+		$q->bindValue('id', $id);
+		$q->execute();
+		$result = $q->fetch(PDO::FETCH_ASSOC);
+
+		if ($result) {
+			return new Users($result);
+		}
+		return null;
+	}
+
 	public function getUserByEmail(string $email)
 	{
 		$q = $this->db->prepare('
@@ -86,30 +104,27 @@ class UserManager
 		return null;
 	}
 
-	private function getIdFromToken(string $token)
+	public function updatePassword(Users $user)
 	{
-		if (isset($token)) {
-			$q = $this->db->prepare('
-			SELECT id
-			FROM validationTokens
-			WHERE token = :token
+		$q = $this->db->prepare('
+	 	 	UPDATE users
+	 	 	SET password = :password
+	 	 	WHERE id = :id;
 			');
 
-			$q->bindValue('token', $token);
-			$q->execute();
+		$newPassword = password_hash($user->getPassword(), PASSWORD_BCRYPT);
+		$id = $user->getId();
 
-			$result = $q->fetch(PDO::FETCH_ASSOC);
-			if ($result) {
-				return $result['id'];
-			}
-		}
-		return null;
+		$q->bindValue(':password', $newPassword);
+		$q->bindValue(':id', $id);
+		$q->execute();
 	}
 
 	public function activateAccount(string $token)
 	{
-		$id = $this->getIdFromToken($token);
+		$tokenManager = new TokenManager($this->db);
 
+		$id = $tokenManager->getIdFromVerificationToken($token);
 		if ($id !== null) {
 			$q = $this->db->prepare('
 	 	 	UPDATE users
@@ -120,6 +135,24 @@ class UserManager
 			$q->bindValue(':id', $id);
 			$q->bindValue(':verified', 'yes');
 			$q->execute();
+			return true;
+		}
+		return false;
+	}
+
+	public function userIsVerified(Users $user)
+	{
+		$q = $this->db->prepare('
+		SELECT verified
+		FROM users
+		WHERE id = :id
+		');
+
+		$q->bindValue('id', $user->getId());
+		$q->execute();
+		$result = $q->fetch(PDO::FETCH_ASSOC);
+
+		if ($result['verified'] === 'yes') {
 			return true;
 		}
 		return false;

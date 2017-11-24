@@ -56,6 +56,46 @@ class TokenManager
 		return $token;
 	}
 
+	public function getIdFromVerificationToken(string $token)
+	{
+		if (isset($token)) {
+			$q = $this->db->prepare('
+			SELECT id
+			FROM validationTokens
+			WHERE token = :token
+			');
+
+			$q->bindValue('token', $token);
+			$q->execute();
+
+			$result = $q->fetch(\PDO::FETCH_ASSOC);
+			if ($result) {
+				return $result['id'];
+			}
+		}
+		return null;
+	}
+
+	public function getIdFromResetToken(string $token)
+	{
+		if (isset($token)) {
+			$q = $this->db->prepare('
+			SELECT id
+			FROM resetTokens
+			WHERE token = :token
+			');
+
+			$q->bindValue('token', $token);
+			$q->execute();
+
+			$result = $q->fetch(\PDO::FETCH_ASSOC);
+			if ($result) {
+				return $result['id'];
+			}
+		}
+		return null;
+	}
+
 	public function deleteResetPasswordToken($token)
 	{
 		$q = $this->db->prepare('

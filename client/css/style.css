@@ -131,9 +131,17 @@ input {
 .webcam-button {
 	display: inline-block;
 	margin: auto;
-	background-color: rgba(0, 150, 0, 0.5);
 	font-size: 15px;
 	color: white;
+}
+
+.red-background {
+	background-color: red;
+
+}
+
+.green-background {
+	background-color: green;
 }
 
 #canvas {
@@ -167,7 +175,7 @@ input {
 	background-color: lightgrey;
 }
 
-.webcam .overlay {
+#overlay {
 	position: absolute;
 	width: 480px;
 	height: 360px;

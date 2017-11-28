@@ -22,6 +22,13 @@
     var retry = null;
     var upload = null;
 
+    var currentSticker = null;
+    var sticker1 = null;
+    var sticker2 = null;
+    var sticker3 = null;
+    var webcamElement = null;
+    var stickerElement = null;
+
     function startup() {
         video = document.getElementById('video');
         canvas = document.getElementById('canvas');
@@ -29,30 +36,57 @@
         shot = document.getElementById('shot');
         retry = document.getElementById('retry');
         upload = document.getElementById('upload');
+        sticker1 = document.getElementById('sticker1');
+        sticker2 = document.getElementById('sticker2');
+        sticker3 = document.getElementById('sticker3');
+        webcamElement = document.getElementsByClassName('webcam');
+        stickerElement = document.createElement('img');
+        stickerElement.id = 'overlay';
 
-        navigator.getMedia = ( navigator.getUserMedia ||
-            navigator.webkitGetUserMedia ||
-            navigator.mozGetUserMedia ||
-            navigator.msGetUserMedia);
+        // Older browsers might not implement mediaDevices at all, so we set an empty object first
+        if (navigator.mediaDevices === undefined) {
+            navigator.mediaDevices = {};
+        }
 
-        navigator.getMedia(
-            {
-                video: true,
-                audio: false
-            },
-            function (stream) {
-                if (navigator.mozGetUserMedia) {
-                    video.mozSrcObject = stream;
-                } else {
-                    var vendorURL = window.URL || window.webkitURL;
-                    video.src = vendorURL.createObjectURL(stream);
+        // Some browsers partially implement mediaDevices. We can't just assign an object
+        // with getUserMedia as it would overwrite existing properties.
+        // Here, we will just add the getUserMedia property if it's missing.
+        if (navigator.mediaDevices.getUserMedia === undefined) {
+            navigator.mediaDevices.getUserMedia = function (constraints) {
+
+                // First get ahold of the legacy getUserMedia, if present
+                var getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+
+                // Some browsers just don't implement it - return a rejected promise with an error
+                // to keep a consistent interface
+                if (!getUserMedia) {
+                    return Promise.reject(new Error('getUserMedia is not implemented in this browser'));
                 }
-                video.play();
-            },
-            function (err) {
-                console.log("An error occured! " + err);
+
+                // Otherwise, wrap the call to the old navigator.getUserMedia with a Promise
+                return new Promise(function (resolve, reject) {
+                    getUserMedia.call(navigator, constraints, resolve, reject);
+                });
             }
-        );
+        }
+
+        navigator.mediaDevices.getUserMedia({audio: false, video: true})
+            .then(function (stream) {
+                var video = document.querySelector('video');
+                // Older browsers may not have srcObject
+                if ("srcObject" in video) {
+                    video.srcObject = stream;
+                } else {
+                    // Avoid using this in new browsers, as it is going away.
+                    video.src = window.URL.createObjectURL(stream);
+                }
+                video.onloadedmetadata = function (e) {
+                    video.play();
+                };
+            })
+            .catch(function (err) {
+                console.log(err.name + ": " + err.message);
+            });
 
         video.addEventListener('canplay', function (ev) {
             if (!streaming) {
@@ -79,17 +113,54 @@
         }, false);
 
         retry.addEventListener('click', function (ev) {
-            clearphoto();
+            clearPhoto();
             ev.preventDefault();
         }, false);
 
-        // clearphoto();
+        sticker1.addEventListener('click', function (ev) {
+            if (currentSticker === sticker1.getAttribute("src")) {
+                clearSticker();
+                shot.style.backgroundColor = 'red';
+            }
+            else {
+                currentSticker = sticker1.getAttribute("src");
+                stickerElement.src = '/client/img/lights.png';
+                webcamElement[0].insertBefore(stickerElement, webcamElement[0].firstChild);
+                shot.style.backgroundColor = 'green';
+            }
+        }, false);
+
+        sticker2.addEventListener('click', function (ev) {
+            if (currentSticker === sticker2.getAttribute("src")) {
+                clearSticker();
+                shot.style.backgroundColor = 'red';
+            }
+            else {
+                currentSticker = sticker2.getAttribute("src");
+                stickerElement.src = '/client/img/flame.png';
+                webcamElement[0].insertBefore(stickerElement, webcamElement[0].firstChild);
+                shot.style.backgroundColor = 'green';
+            }
+        }, false);
+
+        sticker3.addEventListener('click', function (ev) {
+            if (currentSticker === sticker3.getAttribute("src")) {
+                clearSticker();
+                shot.style.backgroundColor = 'red';
+            }
+            else {
+                currentSticker = sticker3.getAttribute("src");
+                stickerElement.src = '/client/img/storm.png';
+                webcamElement[0].insertBefore(stickerElement, webcamElement[0].firstChild);
+                shot.style.backgroundColor = 'green';
+            }
+        }, false);
     }
 
     // Fill the photo with an indication that none has been
     // captured.
 
-    function clearphoto() {
+    function clearPhoto() {
         var context = canvas.getContext('2d');
         context.fillStyle = "#AAA";
         context.fillRect(0, 0, canvas.width, canvas.height);
@@ -98,6 +169,15 @@
         photo.setAttribute('src', data);
         document.getElementsByClassName("photo")[0].style.display = "none";
         document.getElementsByClassName("webcam")[0].style.display = "inline-block";
+        clearSticker();
+    }
+
+    function clearSticker() {
+        currentSticker = document.getElementById('overlay');
+        shot.style.backgroundColor = 'red';
+        if (currentSticker) {
+            currentSticker.remove();
+        }
     }
 
     // Capture a photo by fetching the current contents of the video
@@ -107,32 +187,37 @@
     // other changes before drawing it.
 
     function takepicture() {
-        var xmlhttp = new XMLHttpRequest();
-        var context = canvas.getContext('2d');
+        currentSticker = document.getElementById('overlay');
+        if (currentSticker) {
+            var xmlhttp = new XMLHttpRequest();
+            var context = canvas.getContext('2d');
 
-        if (width && height) {
-            canvas.width = width;
-            canvas.height = height;
-            context.drawImage(video, 0, 0, width, height);
-            var image = canvas.toDataURL('image/png');
-            
-            xmlhttp.onreadystatechange = function () {
-                if (this.readyState === 4 && this.status === 200) {
-                    var response = JSON.parse(xmlhttp.response);
-                    if (response !== "Failure") {
-                        photo.setAttribute('src', response);
-                        document.getElementsByClassName("photo")[0].style.display = "inline-block";
-                        document.getElementsByClassName("webcam")[0].style.display = "none";
+            if (width && height) {
+                canvas.width = width;
+                canvas.height = height;
+                context.drawImage(video, 0, 0, width, height);
+                var toSend =
+                    'image=' + encodeURIComponent(canvas.toDataURL('image/png')) +
+                    '&sticker=' + encodeURIComponent(currentSticker.getAttribute('src'));
+
+                xmlhttp.onreadystatechange = function () {
+                    if (this.readyState === 4 && this.status === 200) {
+                        var response = JSON.parse(xmlhttp.response);
+                        if (response !== "Failure") {
+                            photo.setAttribute('src', response);
+                            document.getElementsByClassName("photo")[0].style.display = "inline-block";
+                            document.getElementsByClassName("webcam")[0].style.display = "none";
+                        }
+                        // console.log(response);
                     }
-                    console.log(response);
-                }
-            };
+                };
 
-            xmlhttp.open("POST", "/server/montage.php", true);
-            xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            xmlhttp.send('image=' + image);
-        } else {
-            clearphoto();
+                xmlhttp.open("POST", "/server/montage.php", true);
+                xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                xmlhttp.send(toSend);
+            } else {
+                clearPhoto();
+            }
         }
     }
 

@@ -6,7 +6,7 @@ html {
 *,
 *:before,
 *:after {
-  box-sizing: inherit;
+	box-sizing: inherit;
 }
 
 body {
@@ -17,12 +17,12 @@ body {
 	padding-bottom: 50px;
 	border: 0;
 	background-image: url('../img/wallpaper.jpg');
-	background-size:cover;
+	background-size: cover;
 	font-family: 'Roboto', 'Arial', sans-serif;
 	color: #13140F;
 }
 
-header{
+header {
 	width: auto;
 	height: 75px;
 	background-color: #13140F;
@@ -111,7 +111,7 @@ input {
 }
 
 .connection-block a:hover, a:active {
-    background-color: grey;
+	background-color: grey;
 }
 
 .center {
@@ -120,6 +120,7 @@ input {
 
 .webcam {
 	position: relative;
+	width: 505px;
 	display: inline-block;
 	margin: 1% auto;
 	padding: 0.5%;
@@ -127,12 +128,12 @@ input {
 	background: #E7E7E7;
 }
 
-#shot {
-  display: block;
-  margin: auto;
-  background-color: rgba(0, 150, 0, 0.5);
-  font-size: 15px;
-  color: white;
+.webcam-button {
+	display: inline-block;
+	margin: auto;
+	background-color: rgba(0, 150, 0, 0.5);
+	font-size: 15px;
+	color: white;
 }
 
 #canvas {
@@ -148,6 +149,7 @@ input {
 
 .image-box {
 	display: inline-block;
+	vertical-align: top;
 	position: relative;
 	margin: 1% 0.5%;
 	padding: 0.5%;
@@ -165,11 +167,18 @@ input {
 	background-color: lightgrey;
 }
 
-.overlay {
-  width: 480px;
-  position:absolute;
-  z-index:9999;
-  bottom:15px;
-	left:10px;
-	text-align:center;
+.webcam .overlay {
+	position: absolute;
+	width: 480px;
+	height: 360px;
+}
+
+.photo {
+	position: relative;
+	max-width: 505px;
+	margin: 1% auto;
+	padding: 0.5%;
+	border: 1px solid #B7BFBF;
+	background: #E7E7E7;
+	display: none;
 }

@@ -1,11 +1,11 @@
 <?php
-
 session_start();
 
 if (isset($_SESSION['user'])) {
 	header('Location: ' . '/');
 	exit();
 }
+
 require_once('../autoload.php');
 
 use server\classes\Database;

@@ -1,4 +1,4 @@
-(function() {
+(function () {
     "use strict";
     // The width and height of the captured photo. We will set the
     // width to the value defined here, but the height will be
@@ -19,12 +19,16 @@
     var canvas = null;
     var photo = null;
     var shot = null;
+    var retry = null;
+    var upload = null;
 
     function startup() {
         video = document.getElementById('video');
         canvas = document.getElementById('canvas');
         photo = document.getElementById('photo');
         shot = document.getElementById('shot');
+        retry = document.getElementById('retry');
+        upload = document.getElementById('upload');
 
         navigator.getMedia = ( navigator.getUserMedia ||
             navigator.webkitGetUserMedia ||
@@ -36,7 +40,7 @@
                 video: true,
                 audio: false
             },
-            function(stream) {
+            function (stream) {
                 if (navigator.mozGetUserMedia) {
                     video.mozSrcObject = stream;
                 } else {
@@ -45,20 +49,20 @@
                 }
                 video.play();
             },
-            function(err) {
+            function (err) {
                 console.log("An error occured! " + err);
             }
         );
 
-        video.addEventListener('canplay', function(ev){
+        video.addEventListener('canplay', function (ev) {
             if (!streaming) {
-                height = video.videoHeight / (video.videoWidth/width);
+                height = video.videoHeight / (video.videoWidth / width);
 
                 // Firefox currently has a bug where the height can't be read from
                 // the video, so we will make assumptions if this happens.
 
                 if (isNaN(height)) {
-                    height = width / (4/3);
+                    height = width / (4 / 3);
                 }
 
                 video.setAttribute('width', width);
@@ -69,12 +73,17 @@
             }
         }, false);
 
-        shot.addEventListener('click', function(ev){
+        shot.addEventListener('click', function (ev) {
             takepicture();
             ev.preventDefault();
         }, false);
 
-        clearphoto();
+        retry.addEventListener('click', function (ev) {
+            clearphoto();
+            ev.preventDefault();
+        }, false);
+
+        // clearphoto();
     }
 
     // Fill the photo with an indication that none has been
@@ -87,6 +96,8 @@
 
         var data = canvas.toDataURL('image/png');
         photo.setAttribute('src', data);
+        document.getElementsByClassName("photo")[0].style.display = "none";
+        document.getElementsByClassName("webcam")[0].style.display = "inline-block";
     }
 
     // Capture a photo by fetching the current contents of the video
@@ -96,14 +107,30 @@
     // other changes before drawing it.
 
     function takepicture() {
+        var xmlhttp = new XMLHttpRequest();
         var context = canvas.getContext('2d');
+
         if (width && height) {
             canvas.width = width;
             canvas.height = height;
             context.drawImage(video, 0, 0, width, height);
+            var image = canvas.toDataURL('image/png');
+            
+            xmlhttp.onreadystatechange = function () {
+                if (this.readyState === 4 && this.status === 200) {
+                    var response = JSON.parse(xmlhttp.response);
+                    if (response !== "Failure") {
+                        photo.setAttribute('src', response);
+                        document.getElementsByClassName("photo")[0].style.display = "inline-block";
+                        document.getElementsByClassName("webcam")[0].style.display = "none";
+                    }
+                    console.log(response);
+                }
+            };
 
-            var data = canvas.toDataURL('image/png');
-            photo.setAttribute('src', data);
+            xmlhttp.open("POST", "/server/montage.php", true);
+            xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xmlhttp.send('image=' + image);
         } else {
             clearphoto();
         }

@@ -14,7 +14,7 @@ if (isset($_POST['image']) && isset($_POST['sticker'])) {
 	$img = base64_decode($img);
 	$img = imagecreatefromstring($img);
 	$sticker = $_POST['sticker'];
-	$sticker = imagecreatefrompng('../client/img/flame.png');
+	$sticker = imagecreatefrompng('..' . $sticker);
 
 	if ($img && $sticker) {
 		//	imagecopy($dest, $image, imagesx($dest)-imagesx($image), imagesy($dest)-imagesy($image), 0, 0, imagesx($image), imagesy($image));

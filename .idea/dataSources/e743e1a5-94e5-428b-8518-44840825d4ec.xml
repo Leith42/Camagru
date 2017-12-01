@@ -10,79 +10,130 @@
     <schema id="4" parent="1" name="mysql"/>
     <schema id="5" parent="1" name="performance_schema"/>
     <schema id="6" parent="1" name="sys"/>
-    <table id="7" parent="2" name="resetTokens"/>
-    <table id="8" parent="2" name="users"/>
-    <table id="9" parent="2" name="validationTokens"/>
-    <column id="10" parent="7" name="token">
+    <table id="7" parent="2" name="gallery"/>
+    <table id="8" parent="2" name="resetTokens"/>
+    <table id="9" parent="2" name="users"/>
+    <table id="10" parent="2" name="validationTokens"/>
+    <column id="11" parent="7" name="id">
       <Position>1</Position>
-      <DataType>char(32)|0</DataType>
+      <DataType>bigint(20) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="12" parent="7" name="filename">
+      <Position>2</Position>
+      <DataType>varchar(25)|0</DataType>
+    </column>
+    <column id="13" parent="7" name="user_id">
+      <Position>3</Position>
+      <Comment>owner</Comment>
+      <DataType>bigint(20) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+      <DefaultExpression>&apos;0&apos;</DefaultExpression>
+    </column>
+    <key id="14" parent="7" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="15" parent="8" name="token">
+      <Position>1</Position>
+      <DataType>char(64)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="11" parent="7" name="id">
+    <column id="16" parent="8" name="id">
       <Position>2</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="12" parent="8" name="id">
-      <Position>1</Position>
-      <DataType>int(11) unsigned|0</DataType>
-      <NotNull>1</NotNull>
-      <SequenceIdentity>1</SequenceIdentity>
-    </column>
-    <column id="13" parent="8" name="username">
-      <Position>2</Position>
-      <DataType>char(10)|0</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="14" parent="8" name="password">
-      <Position>3</Position>
-      <Comment>Blowfish</Comment>
-      <DataType>char(72)|0</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="15" parent="8" name="email">
-      <Position>4</Position>
-      <DataType>char(50)|0</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="16" parent="8" name="avatar">
-      <Position>5</Position>
-      <DataType>tinyint(3) unsigned|0</DataType>
-      <NotNull>1</NotNull>
-      <DefaultExpression>&apos;0&apos;</DefaultExpression>
-    </column>
-    <column id="17" parent="8" name="rights">
-      <Position>6</Position>
-      <DataType>enum(&apos;admin&apos;, &apos;member&apos;)|0</DataType>
-      <NotNull>1</NotNull>
-      <DefaultExpression>&apos;member&apos;</DefaultExpression>
-    </column>
-    <column id="18" parent="8" name="verified">
-      <Position>7</Position>
-      <DataType>enum(&apos;yes&apos;, &apos;no&apos;)|0</DataType>
-      <NotNull>1</NotNull>
-      <DefaultExpression>&apos;no&apos;</DefaultExpression>
-    </column>
+    <index id="17" parent="8" name="id">
+      <ColNames>id</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="18" parent="8" name="token">
+      <ColNames>token</ColNames>
+      <Unique>1</Unique>
+    </index>
     <key id="19" parent="8" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="20" parent="9" name="token">
+    <key id="20" parent="8" name="token">
+      <ColNames>token</ColNames>
+      <UnderlyingIndexName>token</UnderlyingIndexName>
+    </key>
+    <key id="21" parent="8" name="id">
+      <ColNames>id</ColNames>
+      <UnderlyingIndexName>id</UnderlyingIndexName>
+    </key>
+    <column id="22" parent="9" name="id">
       <Position>1</Position>
-      <DataType>char(32)|0</DataType>
+      <DataType>int(11) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="23" parent="9" name="username">
+      <Position>2</Position>
+      <DataType>char(10)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="21" parent="9" name="id">
+    <column id="24" parent="9" name="password">
+      <Position>3</Position>
+      <Comment>Blowfish</Comment>
+      <DataType>char(72)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="25" parent="9" name="email">
+      <Position>4</Position>
+      <DataType>char(50)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="26" parent="9" name="rights">
+      <Position>5</Position>
+      <DataType>enum(&apos;admin&apos;, &apos;member&apos;)|0</DataType>
+      <NotNull>1</NotNull>
+      <DefaultExpression>&apos;member&apos;</DefaultExpression>
+    </column>
+    <column id="27" parent="9" name="verified">
+      <Position>6</Position>
+      <DataType>enum(&apos;yes&apos;, &apos;no&apos;)|0</DataType>
+      <NotNull>1</NotNull>
+      <DefaultExpression>&apos;no&apos;</DefaultExpression>
+    </column>
+    <key id="28" parent="9" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="29" parent="10" name="token">
+      <Position>1</Position>
+      <DataType>char(64)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="30" parent="10" name="id">
       <Position>2</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="22" parent="9" name="id">
+    <index id="31" parent="10" name="id">
       <ColNames>id</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="23" parent="9" name="id">
+    <index id="32" parent="10" name="token">
+      <ColNames>token</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="33" parent="10" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <key id="34" parent="10" name="token">
+      <ColNames>token</ColNames>
+      <UnderlyingIndexName>token</UnderlyingIndexName>
+    </key>
+    <key id="35" parent="10" name="id">
       <ColNames>id</ColNames>
       <UnderlyingIndexName>id</UnderlyingIndexName>
     </key>

@@ -117,6 +117,21 @@
             ev.preventDefault();
         }, false);
 
+        upload.addEventListener('click', function (ev) {
+            var xmlhttp = new XMLHttpRequest();
+            var toSend = 'image=' + encodeURIComponent(photo.getAttribute('src'));
+
+            xmlhttp.onreadystatechange = function () {
+                if (this.readyState === 4 && this.status === 200) {
+                    var response = JSON.parse(xmlhttp.response);
+                }
+            };
+
+            xmlhttp.open("POST", "/server/upload.php", true);
+            xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xmlhttp.send(toSend);
+        }, false);
+
         sticker1.addEventListener('click', function (ev) {
             if (currentSticker === sticker1.getAttribute("src")) {
                 clearSticker();
@@ -208,7 +223,6 @@
                             document.getElementsByClassName("photo")[0].style.display = "inline-block";
                             document.getElementsByClassName("webcam")[0].style.display = "none";
                         }
-                        // console.log(response);
                     }
                 };
 

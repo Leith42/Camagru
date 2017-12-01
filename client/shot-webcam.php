@@ -27,7 +27,7 @@ if (!isset($_SESSION['user'])) {
 	</div>
 	<canvas id="canvas"></canvas>
 	<div class="photo">
-		<img id="photo" alt="The screen capture will appear in this box.">
+		<img src="" id="photo" alt="The screen capture will appear in this box.">
 		<button class="webcam-button green-background" id="retry">Retry</button>
 		<button class="webcam-button green-background" id="upload">Upload</button>
 	</div>

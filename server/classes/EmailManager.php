@@ -4,6 +4,9 @@ namespace server\classes;
 
 class EmailManager
 {
+	/**
+	 * @var \PDO
+	 */
 	private $db;
 	private $tokenManager;
 

@@ -4,7 +4,7 @@
 		<?php
 		echo '<a href="#">Gallery</a>';
 		if (isset($_SESSION['user'])) {
-				echo '<a href="/client/shot.php">Take a shot!</a>';
+				echo '<a href="/client/shot-webcam.php">Take a shot!</a>';
 				echo '<a href="/server/logout.php">Log out</a>';
 			}
 			else {

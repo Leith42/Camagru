@@ -1,0 +1,170 @@
+document.addEventListener("DOMContentLoaded", function () {
+    "use strict";
+
+    var currentSticker = null;
+    var sticker1 = document.getElementById('sticker1');
+    var sticker2 = document.getElementById('sticker2');
+    var sticker3 = document.getElementById('sticker3');
+    var stickerElement = document.createElement('img');
+    var retry = document.getElementById('retry');
+    var canvas = document.getElementById('canvas');
+    var photo = document.getElementById('photo');
+    var form = document.getElementById('form-upload');
+    var formSubmitButton = document.getElementById('form-submit');
+    var fileSelect = document.getElementById('fileToUpload');
+
+    stickerElement.id = 'overlay';
+
+    retry.addEventListener('click', function (ev) {
+        ev.preventDefault();
+        clearPhoto();
+        formSubmitButton.value = 'Upload Image';
+    }, false);
+
+    sticker1.addEventListener('click', function (ev) {
+        if (currentSticker === sticker1.getAttribute("src")) {
+            clearSticker();
+            formSubmitButton.style.backgroundColor = 'red';
+        }
+        else {
+            currentSticker = sticker1.getAttribute("src");
+            stickerElement.src = '/client/img/lights.png';
+            if (fileSelect.files[0]) {
+                formSubmitButton.style.backgroundColor = 'green';
+            }
+        }
+    }, false);
+
+    sticker2.addEventListener('click', function (ev) {
+        if (currentSticker === sticker2.getAttribute("src")) {
+            clearSticker();
+            formSubmitButton.style.backgroundColor = 'red';
+        }
+        else {
+            currentSticker = sticker2.getAttribute("src");
+            stickerElement.src = '/client/img/flame.png';
+            if (fileSelect.files[0]) {
+                formSubmitButton.style.backgroundColor = 'green';
+            }
+        }
+    }, false);
+
+    sticker3.addEventListener('click', function (ev) {
+        if (currentSticker === sticker3.getAttribute("src")) {
+            clearSticker();
+            formSubmitButton.style.backgroundColor = 'red';
+        }
+        else {
+            currentSticker = sticker3.getAttribute("src");
+            stickerElement.src = '/client/img/storm.png';
+            if (fileSelect.files[0]) {
+                formSubmitButton.style.backgroundColor = 'green';
+            }
+        }
+    }, false);
+
+    form.onsubmit = function (ev) {
+        ev.preventDefault();
+        var file = fileSelect.files[0];
+
+        if (!file) {
+            printNoFileError();
+        }
+        else if (currentSticker === null) {
+            printStickerError();
+        }
+        else if (!file.type.match('image.*')) {
+            printBadFormat();
+        }
+        else {
+            var formData = new FormData();
+            var xhr = new XMLHttpRequest();
+
+            formData.append('image', file, file.name);
+            formData.append('sticker', currentSticker);
+
+            xhr.onreadystatechange = function () {
+                if (this.readyState === 4 && this.status === 200) {
+                    formSubmitButton.value = 'Uploading...';
+                    var response = JSON.parse(xhr.response);
+
+                    console.log(response);
+                    if (response === 'Failure') {
+                        window.location.replace('/client/error.php');
+                    }
+                    else {
+                        photo.setAttribute('src', response);
+                        document.getElementsByClassName("photo")[0].style.display = "inline-block";
+                        document.getElementsByClassName("webcam")[0].style.display = "none";
+                    }
+                }
+            };
+
+            xhr.open("POST", "/server/montage.php", true);
+            xhr.send(formData);
+        }
+    };
+
+    function clearPhoto() {
+        var context = canvas.getContext('2d');
+        context.fillStyle = "#AAA";
+        context.fillRect(0, 0, canvas.width, canvas.height);
+
+        var data = canvas.toDataURL('image/png');
+        photo.setAttribute('src', data);
+        document.getElementsByClassName("photo")[0].style.display = "none";
+        document.getElementsByClassName("webcam")[0].style.display = "inline-block";
+        clearSticker();
+    }
+
+    function clearSticker() {
+        currentSticker = null;
+        formSubmitButton.style.backgroundColor = 'red';
+    }
+
+    function printNoFileError() {
+        var prevError = document.getElementById("noFileError");
+        if (!prevError) {
+            var noFileError = document.createElement('P');
+            noFileError.id = "noFileError";
+            addText(noFileError, "• Please select an image to upload.");
+            form.appendChild(noFileError);
+        }
+    }
+
+    function printStickerError() {
+        var prevError = document.getElementById("StickerError");
+        if (!prevError) {
+            var stickerError = document.createElement('P');
+            stickerError.id = "stickerError";
+            addText(stickerError, "• Please select a sticker.");
+            form.appendChild(stickerError);
+        }
+    }
+
+    function printBadFormat() {
+        var prevError = document.getElementById("badFormatError");
+        if (!prevError) {
+            var badFormatError = document.createElement('P');
+            badFormatError.id = "badFormatError";
+            addText(badFormatError, "• The file selected is not an image (JPEG, PNG, GIF...).");
+            form.appendChild(badFormatError);
+        }
+    }
+});
+
+function addText(node, text) {
+    "use strict";
+    var t = text.split(/\s*<br ?\/?>\s*/i), i;
+
+    node.style.color = 'red';
+    if (t[0].length > 0) {
+        node.appendChild(document.createTextNode(t[0]));
+    }
+    for (i = 1; i < t.length; i++) {
+        node.appendChild(document.createElement('BR'));
+        if (t[i].length > 0) {
+            node.appendChild(document.createTextNode(t[i]));
+        }
+    }
+}

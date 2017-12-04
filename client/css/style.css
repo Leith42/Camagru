@@ -172,7 +172,9 @@ input {
 }
 
 .image-box .image img:hover, .image-box .image img:active {
-	background-color: lightgrey;
+	border-radius: 15px;
+	border: 1px solid #B7BFBF;
+	background-color: white;
 }
 
 #overlay {
@@ -189,4 +191,13 @@ input {
 	border: 1px solid #B7BFBF;
 	background: #E7E7E7;
 	display: none;
+}
+
+#form-upload {
+	margin: 5%;
+}
+
+#form-submit {
+	color: white;
+	background-color: red;
 }

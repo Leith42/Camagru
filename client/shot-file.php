@@ -13,7 +13,8 @@ if (!isset($_SESSION['user'])) {
 <?php include "partials/head.html"; ?>
 <body>
 <?php include "partials/header.php"; ?>
-<script src="/client/js/webcam.js" type="text/javascript"></script>
+<!--<script src="/client/js/webcam.js" type="text/javascript"></script>-->
+<script src="/client/js/upload.js" type="text/javascript"></script>
 <main class="center">
 	<div class="image-box">
 		<div class="image"><img id="sticker1" src="/client/img/lights.png"></div>
@@ -21,8 +22,12 @@ if (!isset($_SESSION['user'])) {
 		<div class="image"><img id="sticker3" src="/client/img/storm.png"></div>
 	</div>
 	<div class="webcam">
-		<video id="video">Video stream not available.</video>
-		<button id="shot" class="webcam-button red-background">Take photo</button>
+		<form id="form-upload" method="post" enctype="multipart/form-data">
+			Select a sticker and image to upload:
+			<input type="file" name="fileToUpload" id="fileToUpload">
+			<input id="form-submit" type="submit" value="Upload Image" name="submit">
+		</form>
+		<!--		<button class="webcam-button red-background" id="shot">Take photo</button>-->
 	</div>
 	<canvas id="canvas"></canvas>
 	<div class="photo">

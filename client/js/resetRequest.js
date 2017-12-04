@@ -6,6 +6,8 @@ document.addEventListener("DOMContentLoaded", function () {
         var xmlhttp = new XMLHttpRequest();
         var form = document.forms["reset-request-form"];
         var toSend = 'email=' + encodeURIComponent(form.elements.email.value);
+        event.preventDefault();
+
         xmlhttp.onreadystatechange = function () {
             if (this.readyState === 4 && this.status === 200) {
                 var response = JSON.parse(xmlhttp.response);
@@ -22,7 +24,6 @@ document.addEventListener("DOMContentLoaded", function () {
         xmlhttp.open("POST", "/server/reset-request-password.php", true);
         xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xmlhttp.send(toSend);
-        event.preventDefault();
     });
 });
 

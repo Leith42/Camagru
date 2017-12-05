@@ -5,30 +5,63 @@ document.addEventListener("DOMContentLoaded", function () {
     var sticker1 = document.getElementById('sticker1');
     var sticker2 = document.getElementById('sticker2');
     var sticker3 = document.getElementById('sticker3');
-    var stickerElement = document.createElement('img');
+
     var retry = document.getElementById('retry');
+    var upload = document.getElementById('upload');
     var canvas = document.getElementById('canvas');
     var photo = document.getElementById('photo');
     var form = document.getElementById('form-upload');
     var formSubmitButton = document.getElementById('form-submit');
     var fileSelect = document.getElementById('fileToUpload');
 
-    stickerElement.id = 'overlay';
-
     retry.addEventListener('click', function (ev) {
         ev.preventDefault();
         clearPhoto();
         formSubmitButton.value = 'Upload Image';
+        var noFileError = document.getElementById("noFileError");
+        var stickerError = document.getElementById("stickerError");
+        var formatError = document.getElementById("badFormatError");
+
+        if (noFileError) {
+            noFileError.remove();
+        }
+        if (stickerError) {
+            stickerError.remove();
+        }
+        if (formatError) {
+            formatError.remove();
+        }
+        sticker1.classList.remove("sticker-active");
+        sticker2.classList.remove("sticker-active");
+        sticker3.classList.remove("sticker-active");
+    }, false);
+
+    upload.addEventListener('click', function (ev) {
+        var xmlhttp = new XMLHttpRequest();
+        var toSend = 'image=' + encodeURIComponent(photo.getAttribute('src'));
+
+        xmlhttp.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200) {
+                var response = JSON.parse(xmlhttp.response);
+            }
+        };
+
+        xmlhttp.open("POST", "/server/upload.php", true);
+        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xmlhttp.send(toSend);
     }, false);
 
     sticker1.addEventListener('click', function (ev) {
         if (currentSticker === sticker1.getAttribute("src")) {
             clearSticker();
+            sticker1.classList.remove("sticker-active");
             formSubmitButton.style.backgroundColor = 'red';
         }
         else {
             currentSticker = sticker1.getAttribute("src");
-            stickerElement.src = '/client/img/lights.png';
+            sticker1.className = "sticker-active";
+            sticker2.classList.remove("sticker-active");
+            sticker3.classList.remove("sticker-active");
             if (fileSelect.files[0]) {
                 formSubmitButton.style.backgroundColor = 'green';
             }
@@ -38,11 +71,14 @@ document.addEventListener("DOMContentLoaded", function () {
     sticker2.addEventListener('click', function (ev) {
         if (currentSticker === sticker2.getAttribute("src")) {
             clearSticker();
+            sticker2.classList.remove("sticker-active");
             formSubmitButton.style.backgroundColor = 'red';
         }
         else {
             currentSticker = sticker2.getAttribute("src");
-            stickerElement.src = '/client/img/flame.png';
+            sticker1.classList.remove("sticker-active");
+            sticker2.className = "sticker-active";
+            sticker3.classList.remove("sticker-active");
             if (fileSelect.files[0]) {
                 formSubmitButton.style.backgroundColor = 'green';
             }
@@ -52,14 +88,23 @@ document.addEventListener("DOMContentLoaded", function () {
     sticker3.addEventListener('click', function (ev) {
         if (currentSticker === sticker3.getAttribute("src")) {
             clearSticker();
+            sticker3.classList.remove("sticker-active");
             formSubmitButton.style.backgroundColor = 'red';
         }
         else {
             currentSticker = sticker3.getAttribute("src");
-            stickerElement.src = '/client/img/storm.png';
+            sticker1.classList.remove("sticker-active");
+            sticker2.classList.remove("sticker-active");
+            sticker3.className = "sticker-active";
             if (fileSelect.files[0]) {
                 formSubmitButton.style.backgroundColor = 'green';
             }
+        }
+    }, false);
+
+    fileSelect.addEventListener('change', function (ev) {
+        if (currentSticker) {
+            formSubmitButton.style.backgroundColor = 'green';
         }
     }, false);
 
@@ -73,7 +118,7 @@ document.addEventListener("DOMContentLoaded", function () {
         else if (currentSticker === null) {
             printStickerError();
         }
-        else if (!file.type.match('image.*')) {
+        else if (!file.type.match('image.jpeg') && !file.type.match('image.png') && !file.type.match('image.gif')) {
             printBadFormat();
         }
         else {
@@ -133,7 +178,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function printStickerError() {
-        var prevError = document.getElementById("StickerError");
+        var prevError = document.getElementById("stickerError");
         if (!prevError) {
             var stickerError = document.createElement('P');
             stickerError.id = "stickerError";
@@ -147,7 +192,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (!prevError) {
             var badFormatError = document.createElement('P');
             badFormatError.id = "badFormatError";
-            addText(badFormatError, "• The file selected is not an image (JPEG, PNG, GIF...).");
+            addText(badFormatError, "• The file selected is not an image (JPEG, PNG, GIF).");
             form.appendChild(badFormatError);
         }
     }

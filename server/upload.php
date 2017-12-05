@@ -22,7 +22,15 @@ if (isset($_POST['image'])) {
 	$galleryManager = new GalleryManager($db);
 	$userManager = new UserManager($db);
 
-	$img = str_replace('data:image/png;base64,', '', $_POST['image']);
+	if (strstr($_POST['image'], 'image/jpeg')) {
+		$mimetype = 'image/jpeg';
+	} else if (strstr($_POST['image'], 'image/png')) {
+		$mimetype = 'image/png';
+	} else {
+		$mimetype = 'image/gif';
+	}
+
+	$img = str_replace('data:' . $mimetype . ';base64,', '', $_POST['image']);
 	$img = str_replace(' ', '+', $img);
 	$img = base64_decode($img);
 
@@ -34,8 +42,16 @@ if (isset($_POST['image'])) {
 		$userId = $user->getId();
 		$photoId = $galleryManager->addPhoto($userId, $filename);
 
-		header('Content-Type: image/png');
-		imagepng($img, 'photos/' . $userName . '-' . $photoId . '.png');
+		header('Content-Type: ' . $mimetype);
+		if ($mimetype === 'image/png') {
+			imagepng($img, 'photos/' . $userName . '-' . $photoId . '.png');
+		}
+		else if ($mimetype == 'image/jpeg') {
+			imagejpeg($img, 'photos/' . $userName . '-' . $photoId . '.jpg');
+		}
+		else {
+			imagegif($img, 'photos/' . $userName . '-' . $photoId . '.gif');
+		}
 		imagedestroy($img);
 		die(json_encode('Success'));
 	}

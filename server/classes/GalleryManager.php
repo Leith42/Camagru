@@ -29,4 +29,8 @@ class GalleryManager
 		return ($id);
 	}
 
+	private function prepareImage($image)
+	{
+
+	}
 }

@@ -18,19 +18,48 @@ class MontageManager
 
 			imagedestroy($gd_image);
 			imagedestroy($gd_sticker);
-			return $newImage;
-		}
-		else {
+
+			$mimetype = $this->getMimeType($image_path);
+			$newImageString = $this->getStringFromImage($newImage, $mimetype);
+
+			return $newImageString;
+		} else {
 			throw new \Exception('cc');
 		}
 	}
 
-	public function createMontageFromString($image_path, $sticker_path, int $width, int $height)
+	private function getImageDimensions($gd_image)
 	{
-
+		return array(
+			"width" => imagesx($gd_image),
+			"height" => imagesy($gd_image)
+		);
 	}
 
-	public function getStringFromImage($image, $mimetype)
+	public function createMontageFromWebcam($image, $sticker)
+	{
+		$img = str_replace('data:image/png;base64,', '', $image);
+		$img = str_replace(' ', '+', $img);
+		$img = base64_decode($img);
+		$img = imagecreatefromstring($img);
+		$sticker = imagecreatefrompng('..' . $sticker);
+
+		if ($img && $sticker) {
+			imagecopy($img, $sticker, 0, 0, 0, 0, imagesx($sticker), imagesy($sticker));
+
+			ob_start();
+			header('Content-Type: image/png');
+			imagepng($img);
+			$image_string = ob_get_contents();
+			ob_end_clean();
+
+			imagedestroy($img);
+			return "data:image/png;base64," . base64_encode($image_string);
+		}
+		return null;
+	}
+
+	private function getStringFromImage($image, $mimetype)
 	{
 		ob_start();
 		switch ($mimetype) {
@@ -53,11 +82,11 @@ class MontageManager
 		return "data:" . "$mimetype" . ";base64," . base64_encode($image_string);
 	}
 
-	private function getImageDimensions($gd_image)
+	private function getMimeType($image_path)
 	{
-		return array(
-			"width" => imagesx($gd_image),
-			"height" => imagesy($gd_image)
-		);
+		$finfo = new \finfo(FILEINFO_MIME_TYPE);
+		$mimetype = $finfo->buffer(file_get_contents($image_path));
+		return $mimetype;
 	}
+
 }

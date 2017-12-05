@@ -177,6 +177,12 @@ input {
 	background-color: white;
 }
 
+.sticker-active {
+	border-radius: 15px;
+	border: 1px solid #B7BFBF;
+	background-color: lightgrey;
+}
+
 #overlay {
 	position: absolute;
 	width: 480px;
@@ -200,4 +206,40 @@ input {
 #form-submit {
 	color: white;
 	background-color: red;
+}
+
+#shot-method {
+	display: block;
+	background: #E7E7E7;
+	border: 1px solid #B7BFBF;
+	margin: 2% auto;
+/* 	padding: 0.5%; */
+	width: 30%;
+}
+
+#shot-method img:hover {
+/* 	width: 20%; */
+	background-color: lightgrey;
+	border-radius: 15px;
+	padding: 5%;
+}
+
+.shot-method-image {
+	position: relative;
+	display: inline-block;
+	width: 100%;
+/* 	padding: 5%; */
+/* 	margin: 2%; */
+}
+
+figcaption {
+	color: black;
+	font-family: 'Pacifico', cursive;
+/* 	display: inline-block; */
+}
+
+figure {
+	width: 30%;
+	display: inline-block;
+	text-decoration: none;
 }

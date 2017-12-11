@@ -8,11 +8,10 @@ session_start();
 <?php include "partials/header.php"; ?>
 <main>
 	<div class="form">
-		<h3>Check your mailbox!</h3>
+		<h3>Upload success!</h3>
 		<p class="splash">
-			One last step before you can use your Camagru account.<br/>
-			Please activate your account by clicking on the link we sent you by email.<br/>
-			See you soon!
+			Your image is now in the <b><a href="/client/gallery.php">gallery!</a></b><br/>
+			Have fun!
 		</p>
 	</div>
 </main>

@@ -32,7 +32,7 @@ class ImageValidityChecker
 
 	public function imageTypeIsValid($file)
 	{
-		if (isset($file)) {
+		if (isset($file) && !empty($file['tmp_name'])) {
 			$finfo = new \finfo(FILEINFO_MIME_TYPE);
 			$mimetype = $finfo->buffer(file_get_contents($file['tmp_name']));
 			return in_array($mimetype, array('image/jpeg', 'image/png', 'image/gif'));

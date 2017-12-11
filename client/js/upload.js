@@ -18,38 +18,31 @@ document.addEventListener("DOMContentLoaded", function () {
         ev.preventDefault();
         clearPhoto();
         formSubmitButton.value = 'Upload Image';
-        var noFileError = document.getElementById("noFileError");
-        var stickerError = document.getElementById("stickerError");
-        var formatError = document.getElementById("badFormatError");
-
-        if (noFileError) {
-            noFileError.remove();
-        }
-        if (stickerError) {
-            stickerError.remove();
-        }
-        if (formatError) {
-            formatError.remove();
-        }
-        sticker1.classList.remove("sticker-active");
-        sticker2.classList.remove("sticker-active");
-        sticker3.classList.remove("sticker-active");
     }, false);
 
     upload.addEventListener('click', function (ev) {
-        var xmlhttp = new XMLHttpRequest();
-        var toSend = 'image=' + encodeURIComponent(photo.getAttribute('src'));
+            var xmlhttp = new XMLHttpRequest();
+            var toSend = 'image=' + encodeURIComponent(photo.getAttribute('src'));
 
-        xmlhttp.onreadystatechange = function () {
-            if (this.readyState === 4 && this.status === 200) {
-                var response = JSON.parse(xmlhttp.response);
-            }
-        };
+            xmlhttp.onreadystatechange = function () {
+                if (this.readyState === 4 && this.status === 200) {
+                    var response = JSON.parse(xmlhttp.response);
+                    if (response === 'Failure') {
+                        window.location.replace('/client/error.php');
+                    } else {
+                        upload.style.display = 'none';
+                        window.location.replace('/client/upload-success.php');
+                    }
+                }
+            };
 
-        xmlhttp.open("POST", "/server/upload.php", true);
-        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xmlhttp.send(toSend);
-    }, false);
+            xmlhttp.open("POST", "/server/upload.php", true);
+            xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xmlhttp.send(toSend);
+
+
+        }, false
+    );
 
     sticker1.addEventListener('click', function (ev) {
         if (currentSticker === sticker1.getAttribute("src")) {
@@ -121,6 +114,9 @@ document.addEventListener("DOMContentLoaded", function () {
         else if (!file.type.match('image.jpeg') && !file.type.match('image.png') && !file.type.match('image.gif')) {
             printBadFormat();
         }
+        else if (file.size > 2000000) {
+            printBadSize();
+        }
         else {
             var formData = new FormData();
             var xhr = new XMLHttpRequest();
@@ -160,11 +156,31 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementsByClassName("photo")[0].style.display = "none";
         document.getElementsByClassName("webcam")[0].style.display = "inline-block";
         clearSticker();
+        clearErrors();
     }
 
     function clearSticker() {
         currentSticker = null;
         formSubmitButton.style.backgroundColor = 'red';
+    }
+
+    function clearErrors() {
+        var noFileError = document.getElementById("noFileError");
+        var stickerError = document.getElementById("stickerError");
+        var formatError = document.getElementById("badFormatError");
+
+        if (noFileError) {
+            noFileError.remove();
+        }
+        if (stickerError) {
+            stickerError.remove();
+        }
+        if (formatError) {
+            formatError.remove();
+        }
+        sticker1.classList.remove("sticker-active");
+        sticker2.classList.remove("sticker-active");
+        sticker3.classList.remove("sticker-active");
     }
 
     function printNoFileError() {
@@ -196,6 +212,17 @@ document.addEventListener("DOMContentLoaded", function () {
             form.appendChild(badFormatError);
         }
     }
+
+    function printBadSize() {
+        var prevError = document.getElementById("badSizeError");
+        if (!prevError) {
+            var badSizeError = document.createElement('P');
+            badSizeError.id = "badSizeError";
+            addText(badSizeError, "• The file selected is too big, limit is 2mb.");
+            form.appendChild(badSizeError);
+        }
+    }
+
 });
 
 function addText(node, text) {

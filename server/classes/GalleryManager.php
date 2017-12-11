@@ -28,9 +28,4 @@ class GalleryManager
 		$id = $this->db->lastInsertId();
 		return ($id);
 	}
-
-	private function prepareImage($image)
-	{
-
-	}
 }

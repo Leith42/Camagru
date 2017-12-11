@@ -15,6 +15,7 @@ use server\classes\ImageValidityChecker;
 if (isset($_POST['image']) && isset($_POST['sticker'])) {
 	$montageManager = new MontageManager();
 	$newImage = $montageManager->createMontageFromWebcam($_POST['image'], $_POST['sticker']);
+
 	if ($newImage) {
 		die(json_encode($newImage));
 	}

@@ -23,9 +23,8 @@ class MontageManager
 			$newImageString = $this->getStringFromImage($newImage, $mimetype);
 
 			return $newImageString;
-		} else {
-			throw new \Exception('cc');
 		}
+		return null;
 	}
 
 	private function getImageDimensions($gd_image)
@@ -62,17 +61,15 @@ class MontageManager
 	private function getStringFromImage($image, $mimetype)
 	{
 		ob_start();
+		header('Content-Type: ' . $mimetype);
 		switch ($mimetype) {
 			case 'image/png':
-				header('Content-Type: ' . $mimetype);
 				imagepng($image);
 				break;
 			case 'image/jpeg':
-				header('Content-Type: ' . $mimetype);
 				imagejpeg($image);
 				break;
 			case 'image/gif':
-				header('Content-Type: ' . $mimetype);
 				imagegif($image);
 				break;
 		}
@@ -89,4 +86,8 @@ class MontageManager
 		return $mimetype;
 	}
 
+	public function makeThumb($src, $dest, $width)
+	{
+		//TODO: Maybe.
+	}
 }

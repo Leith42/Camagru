@@ -20,6 +20,7 @@ if (isset($_POST['image']) && isset($_POST['sticker'])) {
 		die(json_encode($newImage));
 	}
 } else if (isset($_FILES['image']) && isset($_POST['sticker'])) {
+	// ImageValidityChecker take an integer as a limit size, here the limit is 2mb (2 000 000 bytes).
 	$imageValidityChecker = new ImageValidityChecker(2000000);
 
 	$fileErrors = $imageValidityChecker->checkFileErrors($_FILES['image']);

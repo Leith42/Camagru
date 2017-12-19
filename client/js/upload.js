@@ -27,6 +27,7 @@ document.addEventListener("DOMContentLoaded", function () {
             xmlhttp.onreadystatechange = function () {
                 if (this.readyState === 4 && this.status === 200) {
                     var response = JSON.parse(xmlhttp.response);
+
                     if (response === 'Failure') {
                         window.location.replace('/client/error.php');
                     } else {

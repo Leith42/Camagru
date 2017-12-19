@@ -1,3 +1,4 @@
+
 html {
 	height: 100%;
 	box-sizing: border-box;
@@ -105,7 +106,7 @@ input {
 
 .connection-block a:link, a:visited {
 	color: white;
-	padding: 28px 20px;
+	padding: 28px 1%;
 	text-decoration: none;
 	display: inline-block;
 }
@@ -199,6 +200,22 @@ input {
 	display: none;
 }
 
+#gallery {
+	text-align: center;
+	width: 100%;
+	padding: 1%;
+}
+
+#gallery-photos {
+	display: inline-block;
+	margin: 0.5% 0.5%;
+	border: 1px solid #B7BFBF;
+	background: white;
+	border-radius: 8px;
+	padding: 0.1%;
+	width: 250px;
+}
+
 #form-upload {
 	margin: 5%;
 }
@@ -213,12 +230,10 @@ input {
 	background: #E7E7E7;
 	border: 1px solid #B7BFBF;
 	margin: 2% auto;
-/* 	padding: 0.5%; */
 	width: 30%;
 }
 
 #shot-method img:hover {
-/* 	width: 20%; */
 	background-color: lightgrey;
 	border-radius: 15px;
 	padding: 5%;
@@ -228,14 +243,11 @@ input {
 	position: relative;
 	display: inline-block;
 	width: 100%;
-/* 	padding: 5%; */
-/* 	margin: 2%; */
 }
 
 figcaption {
 	color: black;
 	font-family: 'Pacifico', cursive;
-/* 	display: inline-block; */
 }
 
 figure {

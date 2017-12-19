@@ -43,6 +43,7 @@ if (isset($_POST['image'])) {
 		$photoId = $galleryManager->addPhoto($userId, $filename);
 
 		header('Content-Type: ' . $mimetype);
+
 		if ($mimetype === 'image/png') {
 			imagepng($img, 'photos/' . $userName . '-' . $photoId . '.png');
 		}
@@ -52,6 +53,7 @@ if (isset($_POST['image'])) {
 		else {
 			imagegif($img, 'photos/' . $userName . '-' . $photoId . '.gif');
 		}
+
 		imagedestroy($img);
 		die(json_encode('Success'));
 	}

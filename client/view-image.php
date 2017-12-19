@@ -1,4 +1,9 @@
 <?php
+if (!isset($_GET['id'])) {
+	header('Location: /client/forms/login-form.php');
+	exit();
+}
+
 session_start();
 
 require_once('../autoload.php');
@@ -18,18 +23,11 @@ $galleryManager = new GalleryManager($db);
 <!DOCTYPE html>
 <html lang="en">
 <?php include "partials/head.html"; ?>
-<!--<body style="background: url('http://www.hdesktops.com/wp-content/uploads/2013/09/Line-Grey-Wallpaper-80.jpg'">-->
 <body>
 <?php include "partials/header.php"; ?>
 <main>
 	<?php
-	if (isset($_GET['page']) && is_numeric($_GET['page'])) {
-		$page = $_GET['page'];
-	} else {
-		$page = 0;
-	}
-	$per_page = 8;
-	$galleryManager->printGallery($page, $per_page);
+		echo 'ready to work!';
 	?>
 </main>
 <?php include "partials/footer.html"; ?>

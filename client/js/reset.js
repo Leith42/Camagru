@@ -6,9 +6,11 @@ document.addEventListener("DOMContentLoaded", function () {
         var xmlhttp = new XMLHttpRequest();
         var form = document.forms["reset-form"];
 
-        var toSend = 'password=' + encodeURIComponent(form.elements.password.value) +
+        var toSend =
+            'password=' + encodeURIComponent(form.elements.password.value) +
             '&passwordRepeat=' + encodeURIComponent(form.elements.passwordRepeat.value) +
             '&id=' + encodeURIComponent(getUrlVars().id);
+
         xmlhttp.onreadystatechange = function () {
             if (this.readyState === 4 && this.status === 200) {
                 var response = JSON.parse(xmlhttp.response);

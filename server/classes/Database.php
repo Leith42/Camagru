@@ -10,7 +10,7 @@ class Database
 		$user = 'root';
 		$password = 'lol';
 
-		$db = new \PDO($dsn, $user, $password);
+		$db = new \PDO($dsn, $user, $password, array(\PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'"));
 		$db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 		return $db;
 	}

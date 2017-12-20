@@ -1,6 +1,6 @@
 <?php
 if (!isset($_GET['id'])) {
-	header('Location: /client/forms/login-form.php');
+	header('Location: /client/error.php');
 	exit();
 }
 
@@ -11,6 +11,7 @@ require_once('../autoload.php');
 use server\classes\Database;
 use server\classes\GalleryManager;
 use server\classes\UserManager;
+use server\classes\CommentManager;
 
 try {
 	$db = Database::getMysqlConnection();
@@ -19,16 +20,27 @@ try {
 }
 
 $galleryManager = new GalleryManager($db);
+$commentManager = new CommentManager($db);
+$userManager = new UserManager($db);
+$photo_id = $_GET['id'];
+
+if (isset($_SESSION['user'])) {
+	$user = $userManager->getUserByUserName($_SESSION['user']);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <?php include "partials/head.html"; ?>
 <body>
 <?php include "partials/header.php"; ?>
+<script src="/client/js/comments.js" type="text/javascript"></script>
 <main>
-	<?php
-		echo 'ready to work!';
-	?>
+	<div id="image-viewer">
+		<?php $galleryManager->printPhoto($photo_id); ?>
+	</div>
+	<div id="comment-block">
+		<?php $commentManager->printComments($photo_id); ?>
+	</div>
 </main>
 <?php include "partials/footer.html"; ?>
 </body>

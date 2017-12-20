@@ -23,11 +23,12 @@ $galleryManager = new GalleryManager($db);
 <?php include "partials/header.php"; ?>
 <main>
 	<?php
-	if (isset($_GET['page']) && is_numeric($_GET['page'])) {
+	if (isset($_GET['page']) && is_numeric($_GET['page']) && $_GET['page'] > 0) {
 		$page = $_GET['page'];
 	} else {
-		$page = 0;
+		$page = 1;
 	}
+
 	$per_page = 8;
 	$galleryManager->printGallery($page, $per_page);
 	?>

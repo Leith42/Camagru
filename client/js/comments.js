@@ -2,36 +2,56 @@ document.addEventListener("DOMContentLoaded", function () {
     "use strict";
     var submitButton = document.getElementsByName("submit-button")[0];
     var deleteButton = document.getElementsByName("delete-button");
+    var xmlhttp = new XMLHttpRequest();
 
     for (var i = 0; i < deleteButton.length; i++) {
-        deleteButton[i].addEventListener("click", function (event) {
-            //TODO: Delete button.
-        });
+        deleteButton[i].addEventListener("click", deleteComment);
     }
 
-    submitButton.addEventListener("click", function (event) {
-        var xmlhttp = new XMLHttpRequest();
-        var comment = document.getElementsByName("comment-input")[0].value;
-        var toSend =
-            'comment=' + encodeURIComponent(comment) +
-            '&id=' + encodeURIComponent(getUrlVars().id);
+    function deleteComment(event) {
+        var toSend = 'id=' + event.target.value;
 
         xmlhttp.onreadystatechange = function () {
             if (this.readyState === 4 && this.status === 200) {
                 var response = JSON.parse(xmlhttp.response);
 
-                if (response === 'Failure') {
-                    printCommentError();
+                if (response === 'Success') {
+                    window.location.reload();
+                } else {
+                    window.location.replace('/client/error.php');
                 }
-                window.location.reload();
             }
         };
 
-        xmlhttp.open("POST", "/server/add-comment.php", true);
+        xmlhttp.open("POST", "/server/delete-comment.php", true);
         xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xmlhttp.send(toSend);
-    });
+    }
 
+    if (submitButton) {
+        submitButton.addEventListener("click", function (event) {
+            var comment = document.getElementsByName("comment-input")[0].value;
+            var toSend =
+                'comment=' + encodeURIComponent(comment) +
+                '&id=' + encodeURIComponent(getUrlVars().id);
+
+            xmlhttp.onreadystatechange = function () {
+                if (this.readyState === 4 && this.status === 200) {
+                    var response = JSON.parse(xmlhttp.response);
+
+                    if (response === 'Failure') {
+                        printCommentError();
+                    } else {
+                        window.location.reload();
+                    }
+                }
+            };
+
+            xmlhttp.open("POST", "/server/add-comment.php", true);
+            xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xmlhttp.send(toSend);
+        });
+    }
 
 });
 

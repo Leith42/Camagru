@@ -27,10 +27,49 @@ class CommentManager
 
 	private function printCommentInput()
 	{
-		echo '<div class="center">';
+		echo '<div id="wrapper-comment-input">';
 		echo '<input class="comment-input" type="text" placeholder="Your comment..." name="comment-input" required>';
 		echo '<button type="submit" class="button" name="submit-button">Send</button>';
 		echo '</div>';
+	}
+
+	private function checkRightsForDelete(int $comment_id, string $currentUserName)
+	{
+		$userManager = new UserManager($this->db);
+		$currentUser = $userManager->getUserByUserName($currentUserName);
+		$userId = $currentUser->getId();
+
+		$q = $this->db->prepare('
+			SELECT user_id
+			FROM comments
+			WHERE id = :comment_id
+		');
+
+		$q->bindValue(':comment_id', $comment_id);
+		$q->execute();
+
+		$result = $q->fetch(\PDO::FETCH_ASSOC);
+
+		if ($result['user_id'] === $userId) {
+			return true;
+		}
+		return $result;
+	}
+
+	public function deleteComment(int $comment_id, string $currentUserName)
+	{
+		$userHasRights = $this->checkRightsForDelete($comment_id, $currentUserName);
+
+		if ($userHasRights) {
+			$q = $this->db->prepare('
+			DELETE FROM comments
+			WHERE id = :comment_id
+			');
+
+			$q->bindValue(':comment_id', $comment_id);
+			$q->execute();
+		}
+		return $userHasRights;
 	}
 
 	public function printComments(int $photo_id)
@@ -42,23 +81,27 @@ class CommentManager
 			$currentUser = $userManager->getUserByUserName($_SESSION['user']);
 		}
 
-		foreach ($comments as $comment) {
-			$author = $userManager->getUserById($comment['user_id']);
+		echo '<div id="comment-block">';
+		if ($comments) {
+			foreach ($comments as $comment) {
+				$author = $userManager->getUserById($comment['user_id']);
 
-			//Print author
-			echo '<span class="comment-author">' . $author->getUsername() . '<br /></span>';
+				//Print author
+				echo '<div class="comment-author">' . $author->getUsername() . '<br /></div>';
 
-			//Print options
-			if ($currentUser->getId() === $author->getId()) {
-				echo '<input name="delete-button" class="delete-comment" type="image" src="/client/img/delete.png" value="' . $comment['id'] . '"/>';
+				//Print options
+				if (isset($currentUser) && $currentUser->getId() === $author->getId()) {
+					echo '<input name="delete-button" class="delete-comment" type="image" src="/client/img/delete.png" value="' . $comment['id'] . '"/>';
+				}
+
+				//Print comment
+				echo '<div class="comment">' . $comment['comment'] . '</div>';
 			}
-
-			//Print comment
-			echo '<span class="comment">' . $comment['comment'] . '</span>';
+		} else {
+			echo 'Be the first to comment!';
 		}
-
+		echo '</div>';
 		if (isset($currentUser)) {
-			echo '<div class="line-separator"></div>';
 			$this->printCommentInput();
 		}
 	}

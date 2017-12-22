@@ -952,7 +952,7 @@
     </column>
     <column id="238" parent="229" name="comment">
       <Position>5</Position>
-      <DataType>tinytext|0</DataType>
+      <DataType>text|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>

@@ -18,8 +18,7 @@ $galleryManager = new GalleryManager($db);
 <!DOCTYPE html>
 <html lang="en">
 <?php include "partials/head.html"; ?>
-<!--<body style="background: url('http://www.hdesktops.com/wp-content/uploads/2013/09/Line-Grey-Wallpaper-80.jpg'">-->
-<body>
+<body style="background: url('/client/img/bg_gallery.jpg'">
 <?php include "partials/header.php"; ?>
 <main>
 	<?php

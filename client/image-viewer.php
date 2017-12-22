@@ -31,14 +31,14 @@ if (isset($_SESSION['user'])) {
 <!DOCTYPE html>
 <html lang="en">
 <?php include "partials/head.html"; ?>
-<body>
+<body style="background: url('/client/img/bg_image.jpg'">
 <?php include "partials/header.php"; ?>
 <script src="/client/js/comments.js" type="text/javascript"></script>
-<main>
-	<div id="image-viewer">
+<main class="center">
+	<div id="wrapper-image-viewer">
 		<?php $galleryManager->printPhoto($photo_id); ?>
 	</div>
-	<div id="comment-block">
+	<div id="wrapper-comment-block">
 		<?php $commentManager->printComments($photo_id); ?>
 	</div>
 </main>

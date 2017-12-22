@@ -93,8 +93,10 @@ class GalleryManager
 		$filename = $user->getUsername() . '-' . $photo['id'];
 		$type = $this->getStringTypeOfFile($filename);
 
+		echo '<div id="image-viewer">';
 		echo '<img id="photo-big" src="/server/photos/' . $filename . $type . '">';
 		echo '<span id="signature">' . 'Posted by ' . $user->getUsername() . '.';
+		echo '</div>';
 	}
 
 	public function printGallery(int $page, int $per_page)

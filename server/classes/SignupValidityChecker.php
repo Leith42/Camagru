@@ -29,7 +29,7 @@ class SignupValidityChecker
 		return $this->error;
 	}
 
-	private function emailIsAvailable(string $email)
+	public function emailIsAvailable(string $email)
 	{
 		$q = $this->db->prepare('
 		SELECT email
@@ -43,12 +43,14 @@ class SignupValidityChecker
 		$row = $q->fetch();
 		if ($row > 0) {
 			$this->error['emailAvailable'] = false;
+			return false;
 		} else {
 			$this->error['emailAvailable'] = true;
+			return true;
 		}
 	}
 
-	private function userNameIsValid(string $username)
+	public function userNameIsValid(string $username)
 	{
 		$userNamePattern = '/^[a-zA-Z0-9]{3,12}$/';
 
@@ -61,7 +63,7 @@ class SignupValidityChecker
 		}
 	}
 
-	private function userNameIsAvailable(string $username)
+	public function userNameIsAvailable(string $username)
 	{
 		$q = $this->db->prepare('
 		SELECT username
@@ -81,7 +83,7 @@ class SignupValidityChecker
 		return true;
 	}
 
-	private function emailIsValid(string $email)
+	public function emailIsValid(string $email)
 	{
 		if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
 			$this->error['emailIsValid'] = true;

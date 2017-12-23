@@ -104,6 +104,22 @@ class UserManager
 		return null;
 	}
 
+	public function updateEmail(Users $user)
+	{
+		$q = $this->db->prepare('
+	 	 	UPDATE users
+	 	 	SET email = :email
+	 	 	WHERE id = :id;
+			');
+
+		$newEmail = $user->getEmail();
+		$id = $user->getId();
+
+		$q->bindValue(':email', $newEmail);
+		$q->bindValue(':id', $id);
+		$q->execute();
+	}
+
 	public function updatePassword(Users $user)
 	{
 		$q = $this->db->prepare('
@@ -116,6 +132,22 @@ class UserManager
 		$id = $user->getId();
 
 		$q->bindValue(':password', $newPassword);
+		$q->bindValue(':id', $id);
+		$q->execute();
+	}
+
+	public function updateUsername(Users $user)
+	{
+		$q = $this->db->prepare('
+	 	 	UPDATE users
+	 	 	SET username = :username
+	 	 	WHERE id = :id;
+			');
+
+		$newUsername = $user->getUsername();
+		$id = $user->getId();
+
+		$q->bindValue(':username', $newUsername);
 		$q->bindValue(':id', $id);
 		$q->execute();
 	}

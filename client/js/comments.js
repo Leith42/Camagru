@@ -1,11 +1,12 @@
 document.addEventListener("DOMContentLoaded", function () {
     "use strict";
     var submitButton = document.getElementsByName("submit-button")[0];
-    var deleteButton = document.getElementsByName("delete-button");
+    var deleteCommentButton = document.getElementsByName("delete-comment-button");
+    var deletePhotoButton = document.getElementById("delete-photo-button");
     var xmlhttp = new XMLHttpRequest();
 
-    for (var i = 0; i < deleteButton.length; i++) {
-        deleteButton[i].addEventListener("click", deleteComment);
+    for (var i = 0; i < deleteCommentButton.length; i++) {
+        deleteCommentButton[i].addEventListener("click", deleteComment);
     }
 
     function deleteComment(event) {
@@ -53,6 +54,29 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
+    if (deletePhotoButton) {
+        deletePhotoButton.addEventListener("click", function (event) {
+            if (confirm("Are you sure you want to delete this photo?") === true) {
+                var toSend = 'id=' + event.target.value;
+
+                xmlhttp.onreadystatechange = function () {
+                    if (this.readyState === 4 && this.status === 200) {
+                        var response = JSON.parse(xmlhttp.response);
+
+                        if (response === 'Success') {
+                            window.location.replace('/client/gallery.php');
+                        } else {
+                            window.location.replace('/client/error.php');
+                        }
+                    }
+                };
+
+                xmlhttp.open("POST", "/server/delete-photo.php", true);
+                xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                xmlhttp.send(toSend);
+            }
+        });
+    }
 });
 
 function printCommentError() {

@@ -12,7 +12,6 @@ use server\classes\UserManager;
 use server\classes\TokenManager;
 
 if (isset($_POST['password']) && isset($_POST['passwordRepeat']) && isset($_POST['id'])) {
-
 	try {
 		$db = Database::getMysqlConnection();
 	} catch (PDOException $e) {

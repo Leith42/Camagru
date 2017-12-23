@@ -281,7 +281,17 @@ figure {
 	cursor: pointer;
 }
 
-#signature {
+#signature-photo {
+	color: #222;
+  text-shadow: 0px 2px 3px #555;
+	font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+	font-size: 100%;
+	line-height: 18px;
+	letter-spacing: 5px;
+	display: block;
+}
+
+#signature-photos-gallery {
   color: #222;
   text-shadow: 0px 2px 3px #555;
 	font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
@@ -328,7 +338,6 @@ figure {
 }
 
 .comment {
-/* 	overflow: auto; */
 	display: block;
 	background: white;
 	padding: 6px 8px;
@@ -357,9 +366,15 @@ figure {
 	border-bottom: 1px solid black;
 }
 
-.delete-comment {
+.delete-comment-button {
 	display: inline-block;
 	width: 13px;
+	border: 0;
+	float: right;
+}
+
+#delete-photo-button {
+	width: 25px;
 	border: 0;
 	float: right;
 }
@@ -381,6 +396,7 @@ figure {
 	display: inline-block;
 	width: 20%;
 	min-width: 200px;
+	border: 1px solid #B7BFBF;
 }
 
 #wrapper-comment-input {

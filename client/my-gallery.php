@@ -28,7 +28,7 @@ $galleryManager = new GalleryManager($db);
 	}
 
 	$per_page = 8;
-	$galleryManager->printGallery($page, $per_page);
+	$galleryManager->printPersonalGallery($page, $per_page, $_SESSION['user']);
 	?>
 </main>
 <?php include "partials/footer.html"; ?>

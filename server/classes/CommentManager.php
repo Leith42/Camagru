@@ -37,7 +37,7 @@ class CommentManager
 	{
 		$userManager = new UserManager($this->db);
 		$currentUser = $userManager->getUserByUserName($currentUserName);
-		$userId = $currentUser->getId();
+		$currentUserId = $currentUser->getId();
 
 		$q = $this->db->prepare('
 			SELECT user_id
@@ -50,10 +50,10 @@ class CommentManager
 
 		$result = $q->fetch(\PDO::FETCH_ASSOC);
 
-		if ($result['user_id'] === $userId) {
+		if ($result['user_id'] === $currentUserId) {
 			return true;
 		}
-		return $result;
+		return false;
 	}
 
 	public function deleteComment(int $comment_id, string $currentUserName)
@@ -91,7 +91,7 @@ class CommentManager
 
 				//Print options
 				if (isset($currentUser) && $currentUser->getId() === $author->getId()) {
-					echo '<input name="delete-button" class="delete-comment" type="image" src="/client/img/delete.png" value="' . $comment['id'] . '"/>';
+					echo '<input name="delete-comment-button" class="delete-comment-button" type="image" src="/client/img/delete.png" value="' . $comment['id'] . '"/>';
 				}
 
 				//Print comment

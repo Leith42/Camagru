@@ -36,22 +36,22 @@ if (isset($_POST['image'])) {
 
 	if ($img = imagecreatefromstring($img)) {
 		$userName = $_SESSION['user'];
-		$filename = $userName . '-' . 'untitled';
-
 		$user = $userManager->getUserByUserName($userName);
 		$userId = $user->getId();
+		$filename = $userId . '-' . 'untitled';
+
 		$photoId = $galleryManager->addPhoto($userId, $filename);
 
 		header('Content-Type: ' . $mimetype);
 
 		if ($mimetype === 'image/png') {
-			imagepng($img, 'photos/' . $userName . '-' . $photoId . '.png');
+			imagepng($img, 'photos/' . $userId . '-' . $photoId . '.png');
 		}
 		else if ($mimetype == 'image/jpeg') {
-			imagejpeg($img, 'photos/' . $userName . '-' . $photoId . '.jpg');
+			imagejpeg($img, 'photos/' . $userId . '-' . $photoId . '.jpg');
 		}
 		else {
-			imagegif($img, 'photos/' . $userName . '-' . $photoId . '.gif');
+			imagegif($img, 'photos/' . $userId . '-' . $photoId . '.gif');
 		}
 
 		imagedestroy($img);

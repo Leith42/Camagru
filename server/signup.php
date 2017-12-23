@@ -10,7 +10,6 @@ require_once('../autoload.php');
 use server\classes\Database;
 use server\classes\UserManager;
 use server\classes\Users;
-use server\classes\TokenManager;
 use server\classes\SignupValidityChecker;
 use server\classes\EmailManager;
 

@@ -328,7 +328,6 @@ figure {
 }
 
 .comment {
-/* 	overflow: auto; */
 	display: block;
 	background: white;
 	padding: 6px 8px;
@@ -357,9 +356,15 @@ figure {
 	border-bottom: 1px solid black;
 }
 
-.delete-comment {
+.delete-comment-button {
 	display: inline-block;
 	width: 13px;
+	border: 0;
+	float: right;
+}
+
+#delete-photo-button {
+	width: 25px;
 	border: 0;
 	float: right;
 }
@@ -381,6 +386,7 @@ figure {
 	display: inline-block;
 	width: 20%;
 	min-width: 200px;
+	border: 1px solid #B7BFBF;
 }
 
 #wrapper-comment-input {

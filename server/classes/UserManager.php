@@ -104,12 +104,28 @@ class UserManager
 		return null;
 	}
 
+	public function updateNotification(Users $user)
+	{
+		$q = $this->db->prepare('
+			UPDATE users
+			SET emailNotification = :emailNotification
+			WHERE id = :id
+		');
+
+		$emailNotification = $user->getEmailNotification();
+		$id = $user->getId();
+
+		$q->bindValue(':emailNotification', $emailNotification);
+		$q->bindValue(':id', $id);
+		$q->execute();
+	}
+
 	public function updateEmail(Users $user)
 	{
 		$q = $this->db->prepare('
 	 	 	UPDATE users
 	 	 	SET email = :email
-	 	 	WHERE id = :id;
+	 	 	WHERE id = :id
 			');
 
 		$newEmail = $user->getEmail();

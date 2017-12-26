@@ -11,6 +11,7 @@ require_once('../autoload.php');
 use server\classes\Database;
 use server\classes\UserManager;
 use server\classes\CommentManager;
+use server\classes\EmailManager;
 
 try {
 	$db = Database::getMysqlConnection();
@@ -20,12 +21,14 @@ try {
 
 $commentManager = new CommentManager($db);
 $userManager = new UserManager($db);
+$emailManager = new EmailManager($db);
 
 $user = $userManager->getUserByUserName($_SESSION['user']);
-$comment = $_POST['comment'];
+$comment = htmlspecialchars($_POST['comment']);
 $photo_id = $_POST['id'];
 
 if ($commentManager->addComment($photo_id, $user->getId(), $comment)) {
+	$emailManager->sendCommentNotification($user, $photo_id);
 	die(json_encode('Valid'));
 }
 die(json_encode('Failure'));

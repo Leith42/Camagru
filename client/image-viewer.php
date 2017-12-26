@@ -34,6 +34,7 @@ if (isset($_SESSION['user'])) {
 <body style="background: url('/client/img/bg_image.jpg'">
 <?php include "partials/header.php"; ?>
 <script src="/client/js/comments.js" type="text/javascript"></script>
+<script src="/client/js/likeButton.js" type="text/javascript"></script>
 <main class="center">
 	<div id="wrapper-image-viewer">
 		<?php $galleryManager->printPhoto($photo_id); ?>

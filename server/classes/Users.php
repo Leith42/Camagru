@@ -4,11 +4,12 @@ namespace server\classes;
 
 class Users
 {
-	private $_id;
-	private $_username;
-	private $_password;
-	private $_passwordRepeat;
-	private $_email;
+	private $id;
+	private $username;
+	private $password;
+	private $passwordRepeat;
+	private $email;
+	private $emailNotification;
 
 	public function __construct(array $userInfos)
 	{
@@ -20,53 +21,63 @@ class Users
 		}
 	}
 
+	public function getEmailNotification()
+	{
+		return $this->emailNotification;
+	}
+
+	public function setEmailNotification($emailNotification)
+	{
+		$this->emailNotification = $emailNotification;
+	}
+
 	public function getPasswordRepeat()
 	{
-		return $this->_passwordRepeat;
+		return $this->passwordRepeat;
 	}
 
 	public function setPasswordRepeat($passwordRepeat)
 	{
-		$this->_passwordRepeat = $passwordRepeat;
+		$this->passwordRepeat = $passwordRepeat;
 	}
 
 	public function getEmail()
 	{
-		return $this->_email;
+		return $this->email;
 	}
 
 	public function setEmail($email)
 	{
-		$this->_email = $email;
+		$this->email = $email;
 	}
 
 	public function getId()
 	{
-		return $this->_id;
+		return $this->id;
 	}
 
 	public function setId($id)
 	{
-		$this->_id = $id;
+		$this->id = $id;
 	}
 
 	public function getUsername()
 	{
-		return $this->_username;
+		return $this->username;
 	}
 
 	public function setUsername($username)
 	{
-		$this->_username = $username;
+		$this->username = $username;
 	}
 
 	public function setPassword($password)
 	{
-		$this->_password = $password;
+		$this->password = $password;
 	}
 
 	public function getPassword()
 	{
-		return $this->_password;
+		return $this->password;
 	}
 }

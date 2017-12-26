@@ -28,7 +28,7 @@ if (isset($_POST['username']) && isset($_POST['email']) &&
 		"username" => $_POST['username'],
 		"password" => $_POST['password'],
 		"email" => $_POST["email"],
-		"passwordRepeat" => $_POST["passwordRepeat"]
+		"passwordRepeat" => $_POST["passwordRepeat"],
 	));
 
 	$errors = $signupChecker->isValid($user);

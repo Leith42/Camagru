@@ -20,6 +20,7 @@ if (isset($_GET['id'])) {
 		$tokenManager = new TokenManager($db);
 		$tokenManager->deleteVerificationToken($token);
 	}
-	header('Location: ' . '/client/verified-success.php');
+	header('Location: /client/verified-success.php');
+} else {
+	header('Location: /client/error.php');
 }
-header('Location: ' . '/client/error.php');

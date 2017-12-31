@@ -4,7 +4,7 @@
     // width to the value defined here, but the height will be
     // calculated based on the aspect ratio of the input stream.
 
-    var width = 480;    // We will scale the photo width to this
+    var width = 720;    // We will scale the photo width to this
     var height = 0;     // This will be computed based on the input stream
 
     // |streaming| indicates whether or not we're currently streaming
@@ -26,6 +26,7 @@
     var sticker1 = null;
     var sticker2 = null;
     var sticker3 = null;
+    var sticker4 = null;
     var webcamElement = null;
     var stickerElement = null;
 
@@ -39,6 +40,7 @@
         sticker1 = document.getElementById('sticker1');
         sticker2 = document.getElementById('sticker2');
         sticker3 = document.getElementById('sticker3');
+        sticker4 = document.getElementById('sticker4');
         webcamElement = document.getElementsByClassName('webcam');
         stickerElement = document.createElement('img');
         stickerElement.id = 'overlay';
@@ -146,7 +148,7 @@
             }
             else {
                 currentSticker = sticker1.getAttribute("src");
-                stickerElement.src = '/client/img/lights.png';
+                stickerElement.src = '/client/img/sticker1.png';
                 webcamElement[0].insertBefore(stickerElement, webcamElement[0].firstChild);
                 shot.style.backgroundColor = 'green';
             }
@@ -159,7 +161,7 @@
             }
             else {
                 currentSticker = sticker2.getAttribute("src");
-                stickerElement.src = '/client/img/flame.png';
+                stickerElement.src = '/client/img/sticker2.png';
                 webcamElement[0].insertBefore(stickerElement, webcamElement[0].firstChild);
                 shot.style.backgroundColor = 'green';
             }
@@ -172,7 +174,20 @@
             }
             else {
                 currentSticker = sticker3.getAttribute("src");
-                stickerElement.src = '/client/img/storm.png';
+                stickerElement.src = '/client/img/sticker3.png';
+                webcamElement[0].insertBefore(stickerElement, webcamElement[0].firstChild);
+                shot.style.backgroundColor = 'green';
+            }
+        }, false);
+
+        sticker4.addEventListener('click', function (ev) {
+            if (currentSticker === sticker4.getAttribute("src")) {
+                clearSticker();
+                shot.style.backgroundColor = 'red';
+            }
+            else {
+                currentSticker = sticker4.getAttribute("src");
+                stickerElement.src = '/client/img/sticker4.png';
                 webcamElement[0].insertBefore(stickerElement, webcamElement[0].firstChild);
                 shot.style.backgroundColor = 'green';
             }

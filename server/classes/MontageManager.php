@@ -14,7 +14,7 @@ class MontageManager
 
 			$newImage = imagecreatetruecolor($width, $height);
 			imagecopyresampled($newImage, $gd_image, 0, 0, 0, 0, $width, $height, $imageDimensions['width'], $imageDimensions['height']);
-			imagecopy($newImage, $gd_sticker, 0, 0, 0, 0, 480, 360);
+			imagecopy($newImage, $gd_sticker, 0, 0, 0, 0, imagesx($gd_sticker), imagesy($gd_sticker));
 
 			imagedestroy($gd_image);
 			imagedestroy($gd_sticker);

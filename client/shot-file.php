@@ -27,9 +27,18 @@ $galleryManager = new GalleryManager($db);
 <script src="/client/js/upload.js" type="text/javascript"></script>
 <main class="center">
 	<div class="sticker-box">
-		<div class="image"><img id="sticker1" src="/client/img/lights.png"></div>
-		<div class="image"><img id="sticker2" src="/client/img/flame.png"></div>
-		<div class="image"><img id="sticker3" src="/client/img/storm.png"></div>
+		<div class="image" id="sticker">
+			<img id="sticker1" src="/client/img/sticker1.png">
+		</div>
+		<div class="image" id="sticker">
+			<img id="sticker2" src="/client/img/sticker2.png">
+		</div>
+		<div class="image" id="sticker">
+			<img id="sticker3" src="/client/img/sticker3.png">
+		</div>
+		<div class="image" id="sticker">
+			<img id="sticker4" src="/client/img/sticker4.png">
+		</div>
 	</div>
 	<div class="webcam">
 		<form id="form-upload" method="post" enctype="multipart/form-data">

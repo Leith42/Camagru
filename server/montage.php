@@ -11,7 +11,6 @@ require_once('../autoload.php');
 use server\classes\MontageManager;
 use server\classes\ImageValidityChecker;
 
-
 if (isset($_POST['image']) && isset($_POST['sticker'])) {
 	$montageManager = new MontageManager();
 	$newImage = $montageManager->createMontageFromWebcam($_POST['image'], $_POST['sticker']);
@@ -29,13 +28,7 @@ if (isset($_POST['image']) && isset($_POST['sticker'])) {
 
 	if ($sizeIsValid && $typeIsValid && $fileErrors === 0) {
 		$montageManager = new MontageManager();
-
-		try {
-			$imageString = $montageManager->createMontageFromFile($_FILES['image']['tmp_name'], $_POST['sticker'], 480, 360);
-		} catch (Exception $e) {
-			die(json_encode($e->getMessage()));
-		}
-
+		$imageString = $montageManager->createMontageFromFile($_FILES['image']['tmp_name'], $_POST['sticker'], 720, 540);
 		die(json_encode($imageString));
 	}
 }

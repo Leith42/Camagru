@@ -106,8 +106,33 @@ class CommentManager
 		}
 	}
 
+	private function addMentions(string $comment, int $photo_id)
+	{
+		preg_match_all('/\B\@\w+/', $comment, $matches);
+
+		if ($matches) {
+			$userManager = new UserManager($this->db);
+			$emailManager = new EmailManager($this->db);
+			$currentUser = $userManager->getUserByUserName($_SESSION['user']);
+			$matches = array_unique($matches[0]);
+
+			foreach ($matches as $match) {
+				$username = substr($match, 1);
+				$mentionedUser = $userManager->getUserByUserName($username);
+
+				if ($mentionedUser) {
+					$emailManager->sendMentionNotification($currentUser, $mentionedUser, $photo_id);
+					$comment = str_replace($match, '<span style="color: blue">' . $match . '</span>', $comment);
+				}
+			}
+		}
+		return $comment;
+	}
+
 	public function addComment(int $photo_id, int $user_id, string $comment)
 	{
+		$comment = $this->addMentions($comment, $photo_id);
+
 		$len = strlen($comment);
 		if ($len === 0 || $len > 160) {
 			return false;

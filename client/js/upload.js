@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var sticker1 = document.getElementById('sticker1');
     var sticker2 = document.getElementById('sticker2');
     var sticker3 = document.getElementById('sticker3');
+    var sticker4 = document.getElementById('sticker4');
 
     var retry = document.getElementById('retry');
     var upload = document.getElementById('upload');
@@ -56,6 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
             sticker1.className = "sticker-active";
             sticker2.classList.remove("sticker-active");
             sticker3.classList.remove("sticker-active");
+            sticker4.classList.remove("sticker-active");
             if (fileSelect.files[0]) {
                 formSubmitButton.style.backgroundColor = 'green';
             }
@@ -73,6 +75,7 @@ document.addEventListener("DOMContentLoaded", function () {
             sticker1.classList.remove("sticker-active");
             sticker2.className = "sticker-active";
             sticker3.classList.remove("sticker-active");
+            sticker4.classList.remove("sticker-active");
             if (fileSelect.files[0]) {
                 formSubmitButton.style.backgroundColor = 'green';
             }
@@ -90,6 +93,25 @@ document.addEventListener("DOMContentLoaded", function () {
             sticker1.classList.remove("sticker-active");
             sticker2.classList.remove("sticker-active");
             sticker3.className = "sticker-active";
+            sticker4.classList.remove("sticker-active");
+            if (fileSelect.files[0]) {
+                formSubmitButton.style.backgroundColor = 'green';
+            }
+        }
+    }, false);
+
+    sticker4.addEventListener('click', function (ev) {
+        if (currentSticker === sticker4.getAttribute("src")) {
+            clearSticker();
+            sticker4.classList.remove("sticker-active");
+            formSubmitButton.style.backgroundColor = 'red';
+        }
+        else {
+            currentSticker = sticker4.getAttribute("src");
+            sticker1.classList.remove("sticker-active");
+            sticker2.classList.remove("sticker-active");
+            sticker3.classList.remove("sticker-active");
+            sticker4.className = "sticker-active";
             if (fileSelect.files[0]) {
                 formSubmitButton.style.backgroundColor = 'green';
             }
@@ -182,6 +204,7 @@ document.addEventListener("DOMContentLoaded", function () {
         sticker1.classList.remove("sticker-active");
         sticker2.classList.remove("sticker-active");
         sticker3.classList.remove("sticker-active");
+        sticker4.classList.remove("sticker-active");
     }
 
     function printNoFileError() {

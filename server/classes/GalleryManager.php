@@ -118,6 +118,8 @@ class GalleryManager
 				echo '<img id="last-photos" src="/server/photos/' . $filename . $type . '">';
 				echo '</div></a>';
 			}
+		} else {
+			echo 'Your last uploaded photos will be displayed here.';
 		}
 	}
 
@@ -210,6 +212,7 @@ class GalleryManager
 			echo '<img name="like-button" id="like-inactive" src="/client/img/like-black.png"/>';
 		}
 		echo '<div id="like-counter">' . $likeCounter . '</div>';
+		echo '<a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-text="Best camagru ever!" data-hashtags="camagru" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>';
 		echo '</div>';
 	}
 

@@ -175,4 +175,15 @@ COMMIT;
 	exit($e->getMessage());
 }
 
+echo PHP_EOL;
+echo '.oooooo.' . PHP_EOL;
+echo 'd8P\'  `Y8b                                                                        ' . PHP_EOL;
+echo '888           .oooo.   ooo. .oo.  .oo.    .oooo.    .oooooooo oooo d8b oooo  oooo  ' . PHP_EOL;
+echo '888          `P  )88b  `888P"Y88bP"Y88b  `P  )88b  888\' `88b  `888""8P `888  `888  ' . PHP_EOL;
+echo '888           .oP"888   888   888   888   .oP"888  888   888   888      888   888  ' . PHP_EOL;
+echo '`88b    ooo  d8(  888   888   888   888  d8(  888  `88bod8P\'   888      888   888  ' . PHP_EOL;
+echo ' `Y8bood8P\'  `Y888""8o o888o o888o o888o `Y888""8o `8oooooo.  d888b     `V88V"V8P\' ' . PHP_EOL;
+echo '                                                   d"     YD                       ' . PHP_EOL;
+echo '                                                   "Y88888P\'                        ' . PHP_EOL;
+echo PHP_EOL;
 echo 'the database is now correctly initialized, enjoy!' . PHP_EOL;

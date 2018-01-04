@@ -171,8 +171,16 @@ ALTER TABLE `users`
   MODIFY `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 COMMIT;
 ');
+<<<<<<< HEAD
+} catch (PDOException $e) {
+	exit($e->getMessage());
+}
+
+echo 'the database is now correctly initialized, enjoy!' . PHP_EOL;
+=======
 
 	echo 'the database is now correctly initialized, enjoy!' . PHP_EOL;
 } catch (PDOException $e) {
 	exit($e->getMessage());
 }
+>>>>>>> master
